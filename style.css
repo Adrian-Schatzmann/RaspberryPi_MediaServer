@@ -1,0 +1,25 @@
+body {
+
+}
+
+header {
+    background-color: #313131;
+}
+
+.logo {
+    height: 80px;
+    width: auto;
+    display: flex;
+    align-items:left; gap:10px;
+}
+
+.nav-links{
+    text-decoration: none;
+    color: #fcfcfc;
+
+}
+
+.nav-links:hover{
+    color: #00aeef;
+    
+} 
