@@ -1,24 +1,90 @@
 <!DOCTYPE html>
 <html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-</head>
-<body>
-
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Plex Media Server Projekt</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!--Header mit Navigation-->
     <header>
-        <img class="logo" src="media/logo.svg" alt="DQ-Solutions Logo">
-        <a class="nav-links" href="index.html">Home</a>
-        <a class="nav-links" href="planung.html">Planung</a>
-        <a class="nav-links" href="anleitung.html">Anleitung</a>
-        <a class="nav-links" href="impressum.html">Impressum</a>
+      <table>
+        <tr>
+          <td>
+            <img class="logo" src="media/logo.svg" alt="DQ-Solutions Logo" />
+          </td>
+          <nav>
+            <td><a class="nav-links" href="index.html">Home</a></td>
+            <td><a class="nav-links" href="planung.html">Planung</a></td>
+            <td><a class="nav-links" href="anleitung.html">Anleitung</a></td>
+            <td><a class="nav-links" href="impressum.html">Impressum</a></td>
+          </nav>
+        </tr>
+      </table>
     </header>
 
+    <main>
+      <!-- Projektbeschreibung oben -->
+      <section class="card">
+        <h1>Plex Media Server – Projekt</h1>
+        <p>
+          Unser Projekt besteht darin, einen
+          <strong>Plex Media Server</strong> auf einem Raspberry Pi
+          einzurichten. Damit entsteht eine zentrale Plattform für Filme, Serien
+          und Musik, die im Heimnetzwerk oder von unterwegs zugänglich ist. Ziel
+          ist eine einfache, kostengünstige und benutzerfreundliche Lösung für
+          die private Medienverwaltung.
+        </p>
+      </section>
 
+      <!-- Raspberry Pi Beschreibung -->
+      <section class="section">
+        <img
+          src="https://www.pi-shop.ch/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/t/h/thumbnail_10__2.jpg"
+          alt="Raspberry Pi 4 Model B"
+        />
+        <div>
+          <h2>Raspberry Pi 4 Model B</h2>
+          <p>
+            Kompakter Einplatinencomputer für Projekte, Server und
+            Medienanwendungen.
+          </p>
+          <dl>
+            <dt>CPU</dt>
+            <dd>Quad-Core Cortex-A72 @ 1,5 GHz</dd>
+            <dt>RAM</dt>
+            <dd>2 / 4 / 8 GB LPDDR4</dd>
+            <dt>Grafik</dt>
+            <dd>VideoCore VI, H.265/4Kp60, H.264/1080p60</dd>
+            <dt>Anschlüsse</dt>
+            <dd>2× Micro-HDMI, 2× USB 3.0, 2× USB 2.0</dd>
+            <dt>Netzwerk</dt>
+            <dd>Gigabit Ethernet, WLAN ac (2,4/5 GHz), Bluetooth 5.0</dd>
+            <dt>Speicher</dt>
+            <dd>microSD (OS), externe USB-Laufwerke</dd>
+            <dt>Strom</dt>
+            <dd>USB-C, 5 V / 3 A</dd>
+          </dl>
+        </div>
+      </section>
 
-
-
-</body>
+      <!-- Fertiges Projekt Beschreibung-->
+      <section class="section reverse">
+        <img
+          src="https://media.printables.com/media/prints/269198/images/2393758_5ec71fdc-9701-4684-8560-e4431bde308e/thumbs/inside/1600x1200/jpg/hero-handle.webp"
+          alt="Fertiges Projekt mit 3D-Druck-Gehäuse und Raspberry Pi"
+        />
+        <div>
+          <h2>Fertiges Projekt</h2>
+          <p>
+            So sieht das fertiggebaute Projekt aus – mit den Teilen aus dem
+            3D-Drucker und dem Raspberry&nbsp;Pi im Inneren. Das kompakte
+            Gehäuse schützt die Hardware und macht den Plex Media Server zu
+            einer stabilen und praktischen Lösung.
+          </p>
+        </div>
+      </section>
+    </main>
+  </body>
 </html>
