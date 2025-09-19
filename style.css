@@ -41,7 +41,7 @@ header td {
 
 /* =========================
 
-   Allgemein und Home
+   Allgemein
 
    ========================= */
 
@@ -74,6 +74,15 @@ dt {
 
 dd {
   margin: 0 0 0.5rem 0;
+}
+
+#Materialliste {
+  text-align: left;
+}
+
+#Materialliste th, #Materialliste td {
+  text-align: left;
+  padding-right: 6rem;
 }
 
 /*Button Design*/
@@ -111,7 +120,7 @@ button:hover {
   gap: 0.5rem;
 }
 
-/*gefärbter Hintergrund, Ränder, Schatter...*/
+/*gefärbter Hintergrund, Ränder...*/
 .card,
 main.anleitung section {
   background: #fff;

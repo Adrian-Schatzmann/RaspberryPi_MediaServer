@@ -9,41 +9,236 @@
   <body>
     <!--Header mit Navigation-->
     <header>
-      <table>
-        <tr>
-          <td>
-            <img class="logo" src="media/logo.svg" alt="DQ-Solutions Logo" />
-          </td>
-          <nav>
+      <nav>
+        <table>
+          <tr>
+            <td>
+              <img class="logo" src="media/logo.svg" alt="DQ-Solutions Logo" />
+            </td>
             <td><a class="nav-links" href="index.html">Home</a></td>
             <td><a class="nav-links" href="planung.html">Planung</a></td>
             <td><a class="nav-links" href="anleitung/a1.html">Anleitung</a></td>
             <td><a class="nav-links" href="impressum.html">Impressum</a></td>
-          </nav>
-        </tr>
-      </table>
+          </tr>
+        </table>
+      </nav>
     </header>
 
     <main>
       <h1 class="title">Planung.</h1>
-      <!-- Projektbeschreibung oben -->
+      <!--Projektbeschreibung oben-->
       <section class="card">
         <p>lorem ipsum</p>
       </section>
 
-      <!-- Raspberry Pi Beschreibung -->
       <section class="section">
-        <img
-          src="https://www.pi-shop.ch/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/t/h/thumbnail_10__2.jpg"
-          alt="Raspberry Pi 4 Model B"
-        />
-        <div>
-          <h2>lorem</h2>
-          <p>lorem ipsum dolor sit amet</p>
+        <div id="Materialliste">
+          <h2>Materialliste</h2>
+          <!--Materialliste-->
+          <table>
+            <tr>
+              <th>Menge</th>
+              <th>Bezeichnung</th>
+              <th>Link</th>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Raspberry Pi 4 Model B 4GB RAM</td>
+              <td>
+                <a
+                  href="https://www.digitec.ch/en/s1/product/raspberry-pi-4-4gb-model-b-development-boards-kits-11267867"
+                  target="_blank"
+                  >Digitec</a
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>1</td>
+              <td>1TB 2.5¨ SATA 3 SSD</td>
+              <td>
+                <a
+                  href="https://www.dq-solutions.ch/de/samsung-1-tb-ssd-870-qvo-sata-iii-s-ata-iii-6-gbit-s-hs1107?m=1881"
+                  target="_blank"
+                  >DQ-Solutions</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>1.9¨ 170x320 TFT Display</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005009633576485.html?spm=a2g0o.productlist.main.34.487cPu5oPu5oza&aem_p4p_detail=202509160201062318614089957000000221090&algo_pvid=1756fee7-55b9-4523-a903-1c9801c20c77&algo_exp_id=1756fee7-55b9-4523-a903-1c9801c20c77-31&pdp_ext_f=%7B%22order%22%3A%224%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CHF%213.40%210.80%21%21%2129.89%217.02%21%40211b807017580132664338548e3831%2112000049701104706%21sea%21CH%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A45ae4578%3Bm03_new_user%3A-29895%3BpisId%3A5000000174211148&curPageLogUid=DnFjs0IStDqc&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005009633576485%7C_p_origin_prod%3A&search_p4p_id=202509160201062318614089957000000221090_8#nav-specification"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+
+            <tr>
+              <td>1</td>
+              <td>16GB microSD Karte</td>
+              <td>
+                <a
+                  href="https://www.digitec.ch/en/s1/product/intenso-microsd-class-10-16-gb-microsdhc-u1-memory-card-10409491"
+                  target="_blank"
+                  >Digitec</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>SATA 3 zu USB 3 Adapter</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005007456493651.html?spm=a2g0o.productlist.main.9.1bcd77d4vTETNw&algo_pvid=050cfb28-aaf2-4b43-9b9c-16c2a9e7325b&algo_exp_id=050cfb28-aaf2-4b43-9b9c-16c2a9e7325b-8&pdp_ext_f=%7B%22order%22%3A%22326%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CHF%212.49%210.80%21%21%213.08%211.00%21%40211b430817580141858283810e7b4c%2112000040832175029%21sea%21CH%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A45ae4578%3Bm03_new_user%3A-29895%3BpisId%3A5000000174211148&curPageLogUid=FbQeqIcGbajl&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007456493651%7C_p_origin_prod%3A"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Taster 16mm mit LED</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/4001291695467.html?invitationCode=NWRoM1lGS1dLMHVOSU0walNoVjVkMHBTZjVoeHdKVVVLbVJRSE91aHMvTWpmdlBzNkVmWTlBPT0&srcSns=sns_Copy&spreadType=socialShare&social_params=61251638792&bizType=ProductDetail&spreadCode=NWRoM1lGS1dLMHVOSU0walNoVjVkMHBTZjVoeHdKVVVLbVJRSE91aHMvTWpmdlBzNkVmWTlBPT0&aff_fcid=498bb58cafe34ad2a0bfe6566bb4c1d5-1758282850763-07163-_Eu7QPYK&tt=MG&aff_fsk=_Eu7QPYK&aff_platform=default&sk=_Eu7QPYK&aff_trace_key=498bb58cafe34ad2a0bfe6566bb4c1d5-1758282850763-07163-_Eu7QPYK&shareId=61251638792&businessType=ProductDetail&platform=AE&terminal_id=5557c8943ebd46319027dda2c83170a7&afSmartRedirect=y"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Taster</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005007513681880.html?invitationCode=ZXRNWlN6SEF5Q0R1WlZnZnRCcjRZVXBTZjVoeHdKVVVLbVJRSE91aHMvTWpmdlBzNkVmWTlBPT0&srcSns=sns_Copy&spreadType=socialShare&social_params=61257022306&bizType=ProductDetail&spreadCode=ZXRNWlN6SEF5Q0R1WlZnZnRCcjRZVXBTZjVoeHdKVVVLbVJRSE91aHMvTWpmdlBzNkVmWTlBPT0&aff_fcid=8fa3db4db93e44898b0c6bf379d542d1-1758284317185-07843-_EyVu7nc&tt=MG&aff_fsk=_EyVu7nc&aff_platform=default&sk=_EyVu7nc&aff_trace_key=8fa3db4db93e44898b0c6bf379d542d1-1758284317185-07843-_EyVu7nc&shareId=61257022306&businessType=ProductDetail&platform=AE&terminal_id=5557c8943ebd46319027dda2c83170a7&afSmartRedirect=y"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Breakout Board</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005003222353618.html?spm=a2g0o.productlist.main.1.3c1015105V00ua&algo_pvid=fb2bb6b6-57d5-4dc4-9935-71ad0cf461b7&algo_exp_id=fb2bb6b6-57d5-4dc4-9935-71ad0cf461b7-0&pdp_ext_f=%7B%22order%22%3A%22112%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CHF%213.00%210.80%21%21%213.70%210.98%21%402103847817580147434272956e4de0%2112000043317366460%21sea%21CH%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A45ae4578%3Bm03_new_user%3A-29895%3BpisId%3A5000000174211148&curPageLogUid=Xmq0gxinOeEe&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005003222353618%7C_p_origin_prod%3A#nav-specification"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>1</td>
+              <td>Lüfter</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005007540369161.html?spm=a2g0o.productlist.main.1.bcfd0DS00DS0UD&algo_pvid=c9666747-ebd4-458e-b5b1-d80a940784ca&algo_exp_id=c9666747-ebd4-458e-b5b1-d80a940784ca-0&pdp_ext_f=%7B%22order%22%3A%2212%22%2C%22eval%22%3A%221%22%2C%22fromPage%22%3A%22search%22%7D&pdp_npi=6%40dis%21CHF%211.09%210.42%21%21%211.34%210.51%21%4021038da617580151671927821e7fe0%2112000041215521513%21sea%21CH%210%21ABX%211%210%21n_tag%3A-29910%3Bd%3A45ae4578%3Bm03_new_user%3A-29895&curPageLogUid=18cvrzKFyYYw&utparam-url=scene%3Asearch%7Cquery_from%3A%7Cx_object_id%3A1005007540369161%7C_p_origin_prod%3A#nav-specification"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>???</td>
+              <td>M3 Abstandshalter 10mm</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005008607065395.html?spm=a2g0o.order_detail.order_detail_item.2.29516368YQ1p20&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>???</td>
+              <td>M2.5 Abstandshalter 10mm</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005008607065395.html?spm=a2g0o.order_detail.order_detail_item.2.29516368YQ1p20&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>??</td>
+              <td>M2.5 Schauben 6mm</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005005329101571.html?spm=a2g0o.order_detail.order_detail_item.8.56c56368I5mLTg&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>??</td>
+              <td>M3 Schauben 6mm</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005005329101571.html?spm=a2g0o.order_detail.order_detail_item.8.56c56368I5mLTg&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>??</td>
+              <td>M3 Schauben 10mm</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005005329101571.html?spm=a2g0o.order_detail.order_detail_item.8.56c56368I5mLTg&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>M2.5 Muttern</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005003994209489.html?spm=a2g0o.order_detail.order_detail_item.2.172d636853Lvdk&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>M3 Muttern</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005003994209489.html?spm=a2g0o.order_detail.order_detail_item.2.172d636853Lvdk&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+            <tr>
+              <td>?</td>
+              <td>M3 Heat Inserts</td>
+              <td>
+                <a
+                  href="https://de.aliexpress.com/item/1005006494200941.html?spm=a2g0o.order_detail.order_detail_item.2.16e46368ynCKzI&gatewayAdapt=glo2deu"
+                  target="_blank"
+                  >AliExpress</a
+                >
+              </td>
+            </tr>
+          </table>
+          <p>Zudem wird benötigt:</p>
+          <ul>
+            <li>Lötkolben und Zinn</li>
+          </ul>
         </div>
       </section>
 
-      <!-- Fertiges Projekt Beschreibung-->
+      <!--Fertiges Projekt Beschreibung-->
       <section class="section reverse">
         <img
           src="https://media.printables.com/media/prints/269198/images/2393758_5ec71fdc-9701-4684-8560-e4431bde308e/thumbs/inside/1600x1200/jpg/hero-handle.webp"
