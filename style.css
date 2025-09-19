@@ -80,7 +80,8 @@ dd {
   text-align: left;
 }
 
-#Materialliste th, #Materialliste td {
+#Materialliste th,
+#Materialliste td {
   text-align: left;
   padding-right: 6rem;
 }
@@ -118,6 +119,16 @@ button:hover {
 .buttonAlignRight {
   display: flex;
   gap: 0.5rem;
+}
+
+.buttonAlignLeft {
+  display: flex;
+  align-items: left;
+  gap: 0.5rem;
+}
+
+#nextBtn {
+  margin-left: 0px;
 }
 
 /*gefärbter Hintergrund, Ränder...*/
@@ -274,7 +285,7 @@ main.anleitung h2 {
       "title"
       "image"
       "buttons"
-      "text"
+      "text";
   }
 }
 
@@ -303,17 +314,17 @@ main.anleitung h2 {
 
 /*Allgemeines Responsive Design*/
 @media (max-width: 700px) {
-.nav-links {
-  margin-left: 2px;
-}
-.card,
-main.anleitung section {
-  padding: 1rem;
-}
+  .nav-links {
+    margin-left: 2px;
+  }
+  .card,
+  main.anleitung section {
+    padding: 1rem;
+  }
 
-.section img {
-  width: 160px;
-  height: auto;
-  border-radius: 4px;
-}
+  .section img {
+    width: 160px;
+    height: auto;
+    border-radius: 4px;
+  }
 }
