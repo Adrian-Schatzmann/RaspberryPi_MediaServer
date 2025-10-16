@@ -42,7 +42,7 @@ print("done!")
 #Speichern mit Ctrl + X, dann Y, dann Enter
 
 #Test ausführen:
-python3 blinkatest.py¨
+python3 blinkatest.py
 #Das Ergebnis sollte so aussehen:
 #(env) adspi@adspi:/tmp $ python3 blinkatest.py
 #Hello, blinka!
