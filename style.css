@@ -76,14 +76,8 @@ dd {
   margin: 0 0 0.5rem 0;
 }
 
-#Materialliste {
-  text-align: left;
-}
-
-#Materialliste th,
-#Materialliste td {
-  text-align: left;
-  padding-right: 6rem;
+li {
+  margin-bottom: 0.5rem;
 }
 
 /*gefärbter Hintergrund, Ränder...*/
@@ -114,6 +108,22 @@ main.anleitung section {
 .section.reverse {
   /*kehrt ausrichtung von links nach rechts um*/
   flex-direction: row-reverse;
+}
+
+/* =========================
+
+   Home
+
+   ========================= */
+
+#Materialliste {
+  text-align: left;
+}
+
+#Materialliste th,
+#Materialliste td {
+  text-align: left;
+  padding-right: 6rem;
 }
 
 /* =========================
@@ -163,7 +173,7 @@ button:hover {
 
 /* =========================
 
-   IMPRESSUM-Layout (nur wenn <main class="impressum">)
+   IMPRESSUM
 
    ========================= */
 
@@ -221,43 +231,11 @@ main.impressum .card h2 {
   grid-area: changes;
 }
 
-/* Responsive Impressum */
-@media (max-width: 700px) {
-  main.impressum {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "owner"
-      "responsible"
-      "contact"
-      "tax"
-      "bank"
-      "info"
-      "liability"
-      "copyright"
-      "changes";
-  }
-}
 /* =========================
 
-   Anleitungs-Layout (nur wenn <main class="anleitung">)
+   Anleitung
 
    ========================= */
-
-main.anleitung {
-  max-width: 1100px; /* etwas breiter als Standard */
-  display: grid; /* Grid statt Flex */
-  gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
-
-  grid-template-areas:
-    "title title title"
-    "text image image"
-    "text image image"
-    "text buttons buttons";
-}
 
 main.anleitung h2 {
   margin: 0.1rem 0 0.6rem;
@@ -277,19 +255,20 @@ main.anleitung h2 {
   grid-area: buttons;
 }
 
-/* Responsive Anleitung */
-@media (max-width: 900px) {
-  main.anleitung {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "title"
-      "image"
-      "buttons"
-      "text";
-  }
+main.anleitung {
+  max-width: 1100px; /* etwas breiter als Standard */
+  display: grid; /* Grid statt Flex */
+  gap: 1rem;
+  grid-template-columns: repeat(3, 1fr);
+
+  grid-template-areas:
+    "title title title"
+    "text image image"
+    "text image image"
+    "text buttons buttons";
 }
 
-/*Settings für "slider" Bilder/*
+/*Settings für "slider" Bilder*/
 
 /*Blendet alle Bilder ausser das erste beim Laden der Seite aus*/
 #slider .slide:not(:first-child) {
@@ -298,8 +277,8 @@ main.anleitung h2 {
 
 .slider {
   width: 100%;
-  height: 100%; /* optional: wenn Container Höhe hat */
-  display: flex; /* Zentrierung */
+  height: 100%;
+  display: flex;
   justify-content: center;
   align-items: center;
 }
@@ -309,8 +288,24 @@ main.anleitung h2 {
   max-height: 100%;
   width: auto;
   height: auto;
-  object-fit: contain; /* Bild wird vollständig angezeigt, nichts wird abgeschnitten */
+  object-fit: contain;
 }
+
+code {
+  width: 100%;
+  font-family: Consolas, "courier new";
+  color: rgb(172, 178, 189);
+  background-color: #323232;
+  padding: 2px;
+  font-size: 0.7rem;
+  overflow-wrap: break-word;
+}
+
+/* =========================
+
+   Responsive Design
+
+   ========================= */
 
 /*Allgemeines Responsive Design*/
 @media (max-width: 700px) {
@@ -328,3 +323,36 @@ main.anleitung h2 {
     border-radius: 4px;
   }
 }
+
+/* Responsive Impressum */
+@media (max-width: 700px) {
+  main.impressum {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "owner"
+      "responsible"
+      "contact"
+      "tax"
+      "bank"
+      "info"
+      "liability"
+      "copyright"
+      "changes";
+  }
+}
+
+/* Responsive Anleitung */
+@media (max-width: 900px) {
+  main.anleitung {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "title"
+      "image"
+      "buttons"
+      "text";
+  }
+}
+

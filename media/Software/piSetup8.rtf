@@ -1,0 +1,75 @@
+#SSH Verbindung (Name und IP anpassen)
+ssh [BENUTZERNAME@IP]
+
+#Update PI
+sudo apt-get update
+sudo apt-get -y upgrade
+
+#Python Installation
+sudo apt-get install -y python3-pip
+sudo apt install --upgrade python3-setuptools
+
+#Virtual enviroment setup
+cd ~
+sudo apt install python3-venv
+python3 -m venv env --system-site-packages
+source env/bin/activate
+
+#Blinka installation
+cd ~
+pip3 install --upgrade adafruit-python-shell
+wget https://raw.githubusercontent.com/adafruit/Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+sudo -E env PATH=$PATH python3 raspi-blinka.py
+
+#Blinka Test
+source ~/env/bin/activate
+cd /tmp
+touch blinkatest.py
+nano nano blinkatest.py
+
+#Per copy-paste einfügen
+import board
+import digitalio
+import busio
+print("Hello, blinka!")
+pin = digitalio.DigitalInOut(board.D4)
+print("Digital IO ok!")
+i2c = busio.I2C(board.SCL, board.SDA)
+print("I2C ok!")
+spi = busio.SPI(board.SCLK, board.MOSI, board.MISO)
+print("SPI ok!")
+print("done!")
+#Speichern mit Ctrl + X, dann Y, dann Enter
+
+#Test ausführen:
+python3 blinkatest.py¨
+#Das Ergebnis sollte so aussehen:
+#(env) adspi@adspi:/tmp $ python3 blinkatest.py
+#Hello, blinka!
+#Digital IO ok!
+#I2C ok!
+#SPI ok!
+#done!
+
+
+#Plex Repository hinzufügen und Installation
+sudo install -d -m 0755 /usr/share/keyrings
+curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key \
+| gpg --dearmor \
+| sudo tee /usr/share/keyrings/plex.gpg >/dev/null
+sudo chmod 0644 /usr/share/keyrings/plex.gpg
+ 
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/plex.gpg] https://downloads.plex.tv/repo/deb public main" \
+| sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+ 
+sudo apt update
+sudo apt install -y plexmediaserver
+
+#Test (ergebnis sollte "Active: active (running)" sein)
+systemctl status plexmediaserver
+
+#Auf dem MacBook im Browser öffnen (IP anpassen)
+[IP]:32400/web/
+
+
+
