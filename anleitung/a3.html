@@ -64,8 +64,29 @@
         <div id="slider" class="slider">
           <!--Slider für Bilder-->
           <img class="slide" src="../media/image1.png" display="none" />
-          <img class="slide" src="../media/image2.png" />
-          <img class="slide" src="../media/image3.png" />
+          <code class="slide" display="none">
+            <pre>
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Plex Repository hinzufügen und Installation</span>
+sudo install -d -m 0755 /usr/share/keyrings
+curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key \
+| gpg --dearmor \
+| sudo <span style="color: rgb(255, 166, 87); font-weight: 400;">tee</span> /usr/share/keyrings/plex.gpg &gt;/dev/null
+sudo <span style="color: rgb(255, 166, 87); font-weight: 400;">chmod</span> 0644 /usr/share/keyrings/plex.gpg
+ 
+<span style="color: rgb(255, 166, 87); font-weight: 400;">echo</span> <span style="color: rgb(165, 214, 255); font-weight: 400;">"deb [arch=<span style="color: rgb(201, 209, 217); font-weight: 400;">$(dpkg --print-architecture)</span>\ 
+signed-by=/usr/share/keyrings/plex.gpg]\
+ https://downloads.plex.tv/repo/deb public main"</span> \
+| sudo <span style="color: rgb(255, 166, 87); font-weight: 400;">tee</span> /etc/apt/sources.list.d/plexmediaserver.list
+ 
+sudo apt update
+sudo apt install -y plexmediaserver
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Test (ergebnis sollte "Active: active (running)" sein)</span>
+systemctl status plexmediaserver
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Auf dem MacBook im Browser öffnen (IP anpassen)</span>
+[IP]:32400/web/</pre>
+          </code>
         </div>
       </section>
 

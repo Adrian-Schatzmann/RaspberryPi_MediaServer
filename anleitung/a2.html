@@ -63,9 +63,53 @@
       <section class="tutorialImage">
         <div id="slider" class="slider">
           <!--Slider für Bilder-->
-          <img class="slide" src="../media/image1.png" display="none" />
-          <img class="slide" src="../media/image2.png" />
-          <img class="slide" src="../media/image3.png" />
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(139, 148, 158); font-weight: 400;">#Update PI</span>
+sudo apt-get update
+sudo apt-get -y upgrade
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Python Installation</span>
+sudo apt-get install -y python3-pip
+sudo apt install --upgrade python3-setuptools
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Virtual enviroment setup</span>
+<span style="color: rgb(255, 166, 87); font-weight: 400;">cd</span> ~
+sudo apt install python3-venv
+python3 -m venv <span style="color: rgb(255, 166, 87); font-weight: 400;">env</span> --system-site-packages
+<span style="color: rgb(255, 166, 87); font-weight: 400;">source</span> <span style="color: rgb(255, 166, 87); font-weight: 400;">env</span>/bin/activate</pre>
+          </code>
+          <code class="slide" display="none">
+            <pre>
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Blinka installation</span>
+<span style="color: rgb(255, 166, 87); font-weight: 400;">cd</span> ~
+pip3 install --upgrade adafruit-python-shell
+wget https://raw.githubusercontent.com/adafruit/\
+Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
+sudo -E <span style="color: rgb(255, 166, 87); font-weight: 400;">env</span> PATH=<span style="color: rgb(121, 192, 255); font-weight: 400;">$PATH</span> python3 raspi-blinka.py
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Blinka Test</span>
+<span style="color: rgb(255, 166, 87); font-weight: 400;">source</span> ~/env/bin/activate
+<span style="color: rgb(255, 166, 87); font-weight: 400;">cd</span> /tmp
+<span style="color: rgb(255, 166, 87); font-weight: 400;">touch</span> blinkatest.py
+nano blinkatest.py
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Per copy-paste einfügen</span>
+import board
+import digitalio
+import busio
+<span style="color: rgb(255, 166, 87); font-weight: 400;">print</span>(<span style="color: rgb(165, 214, 255); font-weight: 400;">"Hello, blinka!"</span>)
+pin = digitalio.DigitalInOut(board.D4)
+<span style="color: rgb(255, 166, 87); font-weight: 400;">print</span>(<span style="color: rgb(165, 214, 255); font-weight: 400;">"Digital IO ok!"</span>)
+i2c = busio.I2C(board.SCL, board.SDA)
+<span style="color: rgb(255, 166, 87); font-weight: 400;">print</span>(<span style="color: rgb(165, 214, 255); font-weight: 400;">"I2C ok!"</span>)
+spi = busio.SPI(board.SCLK, board.MOSI, board.MISO)
+<span style="color: rgb(255, 166, 87); font-weight: 400;">print</span>(<span style="color: rgb(165, 214, 255); font-weight: 400;">"SPI ok!"</span>)
+<span style="color: rgb(255, 166, 87); font-weight: 400;">print</span>(<span style="color: rgb(165, 214, 255); font-weight: 400;">"done!"</span>)
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Speichern mit Ctrl + X, dann Y, dann Enter</span>
+
+<span style="color: rgb(139, 148, 158); font-weight: 400;">#Test ausführen</span>
+python3 blinkatest.py</pre>
+          </code>
         </div>
       </section>
 

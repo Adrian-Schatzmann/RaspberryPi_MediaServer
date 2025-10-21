@@ -31,20 +31,20 @@
       </nav>
     </header>
 
-    <main class="anleitung">
+    <main id="chapter1" class="anleitung">
       <h1 class="title">Anleitung.</h1>
 
       <section class="tutorialText">
         <h2>Raspberry Pi Setup</h2>
         <p>Als erstes installieren wir das OS auf der SD-Karte:</p>
         <ul>
-          <li>
+          <li data-highlight-group="0" >
             <a href="https://www.raspberrypi.com/software/" target="_blank"
               >Raspberry Pi Imager</a
             >
             herunterladen und installieren
           </li>
-          <li>SD Karte an das MacBook anschliessen</li>
+          <li data-highlight-group="1" >SD Karte an das MacBook anschliessen</li>
           <li>
             Im Raspberry Pi Imager das Modell, OS und die SD Karte auswählen
           </li>
@@ -62,7 +62,6 @@
             Durch einen LAN Scan kann die IP des PIs gefunden werden, siehe Bild
           </li>
           <li>Per SSH mit dem Raspberry Pi verbinden</li>
-          <li>Das OS updaten, Python und Blinka installieren, siehe Bild</li>
         </ul>
       </section>
 
@@ -70,12 +69,12 @@
         <div id="slider" class="slider">
           <!--Slider für Bilder-->
           <img class="slide" src="../media/piSetup/1.png" display="none" />
-          <img class="slide" src="../media/piSetup/2.png" />
-          <img class="slide" src="../media/piSetup/3.png" />
-          <img class="slide" src="../media/piSetup/4.png" />
-          <img class="slide" src="../media/piSetup/5.png" />
-          <img class="slide" src="../media/piSetup/6.jpg" />
-          <img class="slide" src="../media/piSetup/7.png" />
+          <img class="slide" src="../media/piSetup/2.png" display="none" />
+          <img class="slide" src="../media/piSetup/3.png" display="none" />
+          <img class="slide" src="../media/piSetup/4.png" display="none" />
+          <img class="slide" src="../media/piSetup/5.png" display="none" />
+          <img class="slide" src="../media/piSetup/6.jpg" display="none" />
+          <img class="slide" src="../media/piSetup/7.png" display="none" />
           <code class="slide">
             <span style="color: rgb(212, 208, 171); font-weight: 400;">#SSH Verbindung (Name und IP anpassen)</span> <br>
             ssh [BENUTZERNAME@IP]
