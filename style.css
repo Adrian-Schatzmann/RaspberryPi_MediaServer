@@ -63,7 +63,8 @@ main {
 }
 
 h1,
-h2 {
+h2,
+h3 {
   margin-top: 1rem;
   margin-bottom: 0.5rem;
 }
@@ -257,17 +258,21 @@ main.anleitung h2 {
   grid-area: buttons;
 }
 
+.toc {
+  grid-area: toc;
+}
+
 main.anleitung {
-  max-width: 1100px; /* etwas breiter als Standard */
-  display: grid; /* Grid statt Flex */
+  max-width: 80%;
+  display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto 90px 1fr;
   grid-template-areas:
-    "title title title"
-    "text buttons buttons"
-    "text image image"
-    "text image image";
+    "title title title title"
+    "text buttons buttons buttons"
+    "text image image toc"
+    "text image image toc";
 }
 
 /*Settings für "slider" Bilder*/
@@ -352,13 +357,14 @@ code {
 }
 
 /* Responsive Anleitung */
-@media (max-width: 900px) {
+@media (max-width: 1007px) {
   main.anleitung {
     grid-template-columns: 1fr;
     grid-template-areas:
       "title"
       "buttons"
+      "text"
       "image"
-      "text";
+      "toc";
   }
 }

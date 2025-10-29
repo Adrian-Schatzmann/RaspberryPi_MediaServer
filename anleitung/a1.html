@@ -32,12 +32,18 @@
 
     <main id="chapter1" class="anleitung">
       <h1 class="title">Anleitung.</h1>
+      
+<!--Inhaltsverzeichnis wird von JS generiert-->
+      <section class="toc card">
+        <h2>Inhaltsverzeichnis</h2>
+        <ul></ul>
+      </section>
 
       <section class="tutorialText">
         <h2>1. Raspberry Pi Setup</h2>
         <p>Als erstes installieren wir das OS auf der SD-Karte:</p>
         <ul>
-          <li data-highlight-group="0" >
+          <li data-highlight-group="0">
             <a href="https://www.raspberrypi.com/software/" target="_blank"
               >Raspberry Pi Imager</a
             >
@@ -47,17 +53,24 @@
           <li data-highlight-group="0">
             Im Raspberry Pi Imager das Modell, OS und die SD Karte auswählen
           </li>
-          <li data-highlight-group="1, 2, 3">Im nächsten Schritt die Einstellungen anpassen, siehe Bilder</li>
+          <li data-highlight-group="1, 2, 3">
+            Im nächsten Schritt die Einstellungen anpassen, siehe Bilder
+          </li>
           <li data-highlight-group="4">
             OS auf die SD Karte schreiben lassen. Danach die SD Karte ans
             Raspberry Pi anschliessen
           </li>
-          <li data-highlight-group="5">Über USB-C ein Netzteil anschliessen (5V, min. 3A)</li>
+          <li data-highlight-group="5">
+            Über USB-C ein Netzteil anschliessen (5V, min. 3A)
+          </li>
           <li data-highlight-group="5">
             Das Raspberry Pi bootet automaisch. Die rote LED sollte leuchten und
             die grüne blinken
           </li>
-          <li data-highlight-group="6">Per SSH mit dem Raspberry Pi verbinden. Dazu den zu zuvor definierten Hostnamen verwenden.</li>
+          <li data-highlight-group="6">
+            Per SSH mit dem Raspberry Pi verbinden. Dazu den zu zuvor
+            definierten Hostnamen verwenden.
+          </li>
         </ul>
       </section>
 
@@ -71,10 +84,13 @@
           <img class="slide" src="../media/piSetup/5.png" display="none" />
           <img class="slide" src="../media/piSetup/6.jpg" display="none" />
           <code class="slide">
-            <span style="color: rgb(212, 208, 171); font-weight: 400;">#SSH Verbindung (Name und Hostname anpassen)</span><br>
-            ssh [BENUTZERNAME@Hostname]<br>
-            <span style="color: rgb(212, 208, 171); font-weight: 400;">#z.B. ssh adspi@adspi.local</span>
-            
+            <span style="color: rgb(212, 208, 171); font-weight: 400"
+              >#SSH Verbindung (Name und Hostname anpassen)</span
+            ><br />
+            ssh [BENUTZERNAME@Hostname]<br />
+            <span style="color: rgb(212, 208, 171); font-weight: 400"
+              >#z.B. ssh adspi@adspi.local</span
+            >
           </code>
         </div>
       </section>
