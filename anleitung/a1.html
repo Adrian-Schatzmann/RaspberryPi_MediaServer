@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Anleitung – DQ Solutions</title>
     <link rel="stylesheet" href="../style.css" />
-    <script src="imgSlider.js" defer></script>
   </head>
   <body>
     <!--Header mit Navigation-->
@@ -35,7 +34,7 @@
       <h1 class="title">Anleitung.</h1>
 
       <section class="tutorialText">
-        <h2>Raspberry Pi Setup</h2>
+        <h2>1. Raspberry Pi Setup</h2>
         <p>Als erstes installieren wir das OS auf der SD-Karte:</p>
         <ul>
           <li data-highlight-group="0" >
@@ -44,24 +43,21 @@
             >
             herunterladen und installieren
           </li>
-          <li data-highlight-group="0" >SD Karte an das MacBook anschliessen</li>
-          <li data-highlight-group="1" >
+          <li data-highlight-group="0">SD Karte an das MacBook anschliessen</li>
+          <li data-highlight-group="0">
             Im Raspberry Pi Imager das Modell, OS und die SD Karte auswählen
           </li>
-          <li>Im nächsten Schritt die Einstellungen anpassen, siehe Bilder</li>
-          <li>
+          <li data-highlight-group="1, 2, 3">Im nächsten Schritt die Einstellungen anpassen, siehe Bilder</li>
+          <li data-highlight-group="4">
             OS auf die SD Karte schreiben lassen. Danach die SD Karte ans
             Raspberry Pi anschliessen
           </li>
-          <li>Über USB-C ein Netzteil anschliessen (5V, min. 3A)</li>
-          <li>
+          <li data-highlight-group="5">Über USB-C ein Netzteil anschliessen (5V, min. 3A)</li>
+          <li data-highlight-group="5">
             Das Raspberry Pi bootet automaisch. Die rote LED sollte leuchten und
             die grüne blinken
           </li>
-          <li>
-            Durch einen LAN Scan kann die IP des PIs gefunden werden, siehe Bild
-          </li>
-          <li>Per SSH mit dem Raspberry Pi verbinden</li>
+          <li data-highlight-group="6">Per SSH mit dem Raspberry Pi verbinden. Dazu den zu zuvor definierten Hostnamen verwenden.</li>
         </ul>
       </section>
 
@@ -74,10 +70,11 @@
           <img class="slide" src="../media/piSetup/4.png" display="none" />
           <img class="slide" src="../media/piSetup/5.png" display="none" />
           <img class="slide" src="../media/piSetup/6.jpg" display="none" />
-          <img class="slide" src="../media/piSetup/7.png" display="none" />
           <code class="slide">
-            <span style="color: rgb(212, 208, 171); font-weight: 400;">#SSH Verbindung (Name und IP anpassen)</span> <br>
-            ssh [BENUTZERNAME@IP]
+            <span style="color: rgb(212, 208, 171); font-weight: 400;">#SSH Verbindung (Name und Hostname anpassen)</span><br>
+            ssh [BENUTZERNAME@Hostname]<br>
+            <span style="color: rgb(212, 208, 171); font-weight: 400;">#z.B. ssh adspi@adspi.local</span>
+            
           </code>
         </div>
       </section>
@@ -95,5 +92,6 @@
         </div>
       </section>
     </main>
+    <script src="imgSlider.js" defer></script>
   </body>
 </html>

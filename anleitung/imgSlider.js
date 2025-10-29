@@ -1,3 +1,6 @@
+/*------------------------------
+Allgemein
+------------------------------*/ 
 //Array mit allen Elenemten der Klasse "slide" innerhalb von Elementen mit der ID "slider" erstellen
 const slides = document.querySelectorAll("#slider .slide");
 //Variable für aktuelle Bildposition
@@ -6,7 +9,10 @@ let current = 0;
 //Gruppe 0 hervorheben
 highlightCurrentStep();
 
-// Funktion: nächstes Bild anzeigen
+/*------------------------------
+Bildwechsel
+------------------------------*/ 
+//Nächstes Bild anzeigen
 function nextImage() {
   slides[current].style.display = "none"; // aktuelles Bild ausblenden
   current = (current + 1) % slides.length; // nächstes Bild, mit Rücksprung am Ende
@@ -14,7 +20,7 @@ function nextImage() {
   highlightCurrentStep();
 }
 
-// Funktion: vorheriges Bild anzeigen
+//Vorheriges Bild anzeigen
 function previousImage() {
   slides[current].style.display = "none"; // aktuelles Bild ausblenden
   current = (current - 1 + slides.length) % slides.length; // vorheriges Bild, mit Rücksprung am Anfang
@@ -22,6 +28,11 @@ function previousImage() {
   highlightCurrentStep();
 }
 
+/*------------------------------
+Highlight-System
+Das HTML-Attribut data-highlight-group="0,1,2" legt fest, bei welchen Bildern das Element hervorgehoben wird.
+Jede Zahl entspricht dem Index eines Bildes(oder codes) im Slider (#slider .slide), beginnend bei 0.
+------------------------------*/ 
 function highlightCurrentStep() {
   //alle bisherigen highlights entfernen
   let allItems = document.querySelectorAll(`[data-highlight-group]`);
@@ -29,12 +40,14 @@ function highlightCurrentStep() {
     element.classList.remove("highlight");
   });
 
-  //altuelle highlights suchen
+  // aktuelle highlights suchen
   let currentHighlightList = Array.from(
-    document.querySelectorAll(
-      `[data-highlight-group="${current}"]`
-    )
-  );
+    document.querySelectorAll(`[data-highlight-group]`)
+  ).filter((el) => {
+    const groups = el.dataset.highlightGroup.split(/[ ,]+/); //Trennt nach Leerzeichen oder Komma
+    return groups.includes(current.toString());
+  });
+
   //debug
   console.log(currentHighlightList);
 
@@ -44,6 +57,9 @@ function highlightCurrentStep() {
   });
 }
 
+/*------------------------------
+Buttons & Pfeiltasten
+------------------------------*/ 
 // Button-Events
 document.getElementById("nextBtn").addEventListener("click", nextImage);
 document.getElementById("lastBtn").addEventListener("click", previousImage);
