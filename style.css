@@ -209,9 +209,7 @@ main.impressum {
   grid-template-areas:
     "title title title"
     "owner responsible contact"
-    "tax bank bank"
-    "info info liability"
-    "copyright copyright changes";
+    "info info info"
 }
 
 main.impressum .card h2 {
@@ -231,28 +229,8 @@ main.impressum .card h2 {
   grid-area: contact;
 }
 
-.tax {
-  grid-area: tax;
-}
-
-.bank {
-  grid-area: bank;
-}
-
 .info {
   grid-area: info;
-}
-
-.liability {
-  grid-area: liability;
-}
-
-.copyright {
-  grid-area: copyright;
-}
-
-.changes {
-  grid-area: changes;
 }
 
 /* =========================
