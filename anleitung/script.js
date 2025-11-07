@@ -96,6 +96,9 @@ function toc() {
     { file: "a1.html", title: "1. Raspberry Pi Setup" },
     { file: "a2.html", title: "2. Dependencies" },
     { file: "a3.html", title: "3. Plex" },
+    { file: "a4.html", title: "4. Case" },
+    { file: "a5.html", title: "5. Verkabelung" },
+    { file: "a6.html", title: "6. X" },
   ];
 
   //Inhaltsverzeichnis befüllen
