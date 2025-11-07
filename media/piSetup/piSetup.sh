@@ -4,8 +4,6 @@ ssh [BENUTZERNAME@IP]
 #Update PI
 sudo apt-get update
 sudo apt-get -y upgrade
-
-#Python Installation
 sudo apt-get install -y python3-pip
 sudo apt install --upgrade python3-setuptools
 
@@ -23,7 +21,7 @@ sudo -E env PATH=$PATH python3 raspi-blinka.py
 
 #Blinka Test
 source ~/env/bin/activate
-cd /tmp
+cd $HOME
 touch blinkatest.py
 nano nano blinkatest.py
 

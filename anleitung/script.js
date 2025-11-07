@@ -94,7 +94,7 @@ function toc() {
   //Kapitel definieren
   const chapters = [
     { file: "a1.html", title: "1. Raspberry Pi Setup" },
-    { file: "a2.html", title: "2. Blinka" },
+    { file: "a2.html", title: "2. Dependencies" },
     { file: "a3.html", title: "3. Plex" },
   ];
 
