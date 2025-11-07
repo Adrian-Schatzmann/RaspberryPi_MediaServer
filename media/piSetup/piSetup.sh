@@ -59,7 +59,8 @@ sudo chmod 0644 /usr/share/keyrings/plex.gpg
  
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/plex.gpg] https://downloads.plex.tv/repo/deb public main" \
 | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
- 
+
+#Plex Installation
 sudo apt update
 sudo apt install -y plexmediaserver
 
