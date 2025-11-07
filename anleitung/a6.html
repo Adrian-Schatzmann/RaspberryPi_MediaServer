@@ -41,20 +41,328 @@
 
       <!--Anleitungstext-->
       <section class="tutorialText">
-        <h2>2. Blinka</h2>
-        <p>Als erstes installieren wir das OS auf der SD-Karte:</p>
+        <h2>6. Display & Button</h2>
+        <p>Zuerst müssen wir den SPI (Serial Peripheral Interface) freigeben, dann ein Skript erstellen, dass beim Start automatisch ausgeführt wird:</p>
         <ul>
-          <li data-highlight-group="0">lorem ipsum</li>
-          <li data-highlight-group="0">lorem ipsum</li>
-          <li data-highlight-group="1, 2, 3">lorem ipsum</li>
-
-          </li>
+          <li data-highlight-group="0">Um den SPI freizugeben, muss eine configdatei geändert werden. Anschliessend ist ein reboot zwingend (sudo reboot). Danach das virtual enviroment wieder aktivieren!</li>
+          <li data-highlight-group="1">Wie beim Blinka Test ein Skriptfile erstellen</li>
+          <li data-highlight-group="2">Den Code in das Skript copy-pasten. Mit ctrl + x, dann y, dann Enter speichern</li>
+          <li data-highlight-group="3">Für den Autostart brauchen wir eine neue Datei</li>
+          <li data-highlight-group="4">Erneut den Code rechts copy-pasten und speichern. Hier muss der Benutzername zwingend angepasst werden (user=x).</li>
+          <li data-highlight-group="5">Den Autostart aktivieren und das System neustarten. Danach das virtual enviroment wieder aktivieren</li>
+          <li data-highlight-group="6">Das Display sollte jetzt Systeminfos anzeigen. Mit dem Powerbutton lässt sich der Server jetzt ein- und ausschalten</li>
         </ul>
       </section>
 
       <!--Bilder/Code Slider-->
       <section class="tutorialImage">
         <div id="slider" class="slider">
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#SPI freigeben</span>
+sudo nano /boot/firmware/config.txt
+<span style="color: rgb(212, 208, 171); font-weight: 400;">#Am Ende der Datei hinzufügen:</span>
+dtoverlay=spi0-1cs,cs0_pin=7</pre>
+          </code>
+          <code class="slide" display="none">
+<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Skriptfile erstellen</span>
+<span style="color: rgb(245, 171, 53); font-weight: 400;">source</span> ~/env/bin/activate
+<span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">$HOME</span>
+nano system_status.py</pre>
+          </code>
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;"># Work in progress</span>
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> board
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> digitalio
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> busio
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> time
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> subprocess
+<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> os
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># KEIN 'import RPi.GPIO' MEHR!</span>
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Importiere Display-Treiber (PIL-Modus)</span>
+<span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">from</span> adafruit_rgb_display <span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> st7789 <span style="color: rgb(220, 198, 224); font-weight: 400;">as</span> st7789_driver
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">from</span> PIL <span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> Image, ImageDraw, ImageFont
+<span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> ImportError:
+    <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"FATAL: Adafruit Display oder Pillow nicht gefunden. Display deaktiviert."</span>)
+    st7789_driver = <span style="color: rgb(245, 171, 53); font-weight: 400;">None</span>
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># HAUPT-INITIALISIERUNG</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+<span style="color: rgb(220, 198, 224); font-weight: 400;">def</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">initialize_hardware</span>():
+    <span style="color: rgb(171, 227, 56); font-weight: 400;">"""Initialisiert SPI, Display, Taster und LED mit digitalio."""</span>
+    display = <span style="color: rgb(245, 171, 53); font-weight: 400;">None</span>
+    led = <span style="color: rgb(245, 171, 53); font-weight: 400;">None</span>
+    button = <span style="color: rgb(245, 171, 53); font-weight: 400;">None</span>
+    
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Standard-LED Initialisierung (mit digitalio)</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    LED_PIN = board.D14 <span style="color: rgb(212, 208, 171); font-weight: 400;"># GPIO 14 (Pin 8)</span>
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        led = digitalio.DigitalInOut(LED_PIN)
+        led.direction = digitalio.Direction.OUTPUT
+        led.value = <span style="color: rgb(245, 171, 53); font-weight: 400;">True</span> <span style="color: rgb(212, 208, 171); font-weight: 400;"># LED anschalten</span>
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Standard-LED an GPIO <span style="color: rgb(171, 227, 56); font-weight: 400;">{LED_PIN}</span> (digitalio) aktiviert."</span>)
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception <span style="color: rgb(220, 198, 224); font-weight: 400;">as</span> e:
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Fehler beim Initialisieren der Standard-LED: <span style="color: rgb(171, 227, 56); font-weight: 400;">{e}</span>"</span>)
+
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Taster-Initialisierung (mit digitalio)</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    BUTTON_PIN = board.D3 <span style="color: rgb(212, 208, 171); font-weight: 400;"># KORREKTUR: Geändert von D5 auf D3 (GPIO 3)</span>
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        button = digitalio.DigitalInOut(BUTTON_PIN)
+        button.direction = digitalio.Direction.INPUT
+        button.pull = digitalio.Pull.UP <span style="color: rgb(212, 208, 171); font-weight: 400;"># Interner Pull-Up (Taster muss zu GND ziehen)</span>
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Taster an GPIO <span style="color: rgb(171, 227, 56); font-weight: 400;">{BUTTON_PIN}</span> (digitalio) aktiviert."</span>)
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception <span style="color: rgb(220, 198, 224); font-weight: 400;">as</span> e:
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Fehler beim Initialisieren des Tasters: <span style="color: rgb(171, 227, 56); font-weight: 400;">{e}</span>"</span>)
+
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Display-Initialisierung (NACH GPIO)</span>
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -----------------------------</span>
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> st7789_driver:
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># SPI-Bus initialisieren</span>
+            spi = busio.SPI(clock=board.SCK, MOSI=board.MOSI)
+            
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Steuerungspins</span>
+            tft_cs = digitalio.DigitalInOut(board.CE0)
+            tft_dc = digitalio.DigitalInOut(board.D25)
+            tft_rst = digitalio.DigitalInOut(board.D24)
+
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Display-Treiber initialisieren (ST7789, 170x320 Physisch)</span>
+            display = st7789_driver.ST7789(
+                spi,
+                cs=tft_cs,
+                dc=tft_dc,
+                rst=tft_rst,
+                width=<span style="color: rgb(245, 171, 53); font-weight: 400;">170</span>,  <span style="color: rgb(212, 208, 171); font-weight: 400;"># Physische Breite</span>
+                height=<span style="color: rgb(245, 171, 53); font-weight: 400;">320</span>, <span style="color: rgb(212, 208, 171); font-weight: 400;"># Physische Höhe</span>
+                x_offset=<span style="color: rgb(245, 171, 53); font-weight: 400;">35</span>, <span style="color: rgb(212, 208, 171); font-weight: 400;"># KORREKTUR für 170px-Displays auf 240px-Controller</span>
+                y_offset=<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>,
+                rotation=<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(212, 208, 171); font-weight: 400;"># Keine Treiber-Rotation</span>
+                baudrate=<span style="color: rgb(245, 171, 53); font-weight: 400;">24000000</span>
+            )
+            <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Display-Treiber erfolgreich initialisiert."</span>)
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception <span style="color: rgb(220, 198, 224); font-weight: 400;">as</span> e:
+            <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Display-Initialierungsfehler (SPI/Pins): <span style="color: rgb(171, 227, 56); font-weight: 400;">{e}</span>"</span>)
+
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> display, led, button
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># HILFSFUNKTIONEN FÜR DATEN</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+
+<span style="color: rgb(220, 198, 224); font-weight: 400;">def</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">get_ip_address</span>():
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        ip = subprocess.check_output(<span style="color: rgb(171, 227, 56); font-weight: 400;">"hostname -I | awk '{print $1}'"</span>, shell=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>).decode(<span style="color: rgb(171, 227, 56); font-weight: 400;">"utf-8"</span>).strip()
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> ip <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> ip <span style="color: rgb(220, 198, 224); font-weight: 400;">else</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">"N/A"</span>
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception:
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">"IP Fehler"</span>
+
+<span style="color: rgb(220, 198, 224); font-weight: 400;">def</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">get_cpu_temp</span>():
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        temp = subprocess.check_output(<span style="color: rgb(171, 227, 56); font-weight: 400;">"vcgencmd measure_temp | grep -o -E '[[:digit:]|.]*'"</span>, shell=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>).decode(<span style="color: rgb(171, 227, 56); font-weight: 400;">"utf-8"</span>).strip()
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">f"<span style="color: rgb(171, 227, 56); font-weight: 400;">{<span style="color: rgb(245, 171, 53); font-weight: 400;">float</span>(temp):<span style="color: rgb(245, 171, 53); font-weight: 400;">.1</span>f}</span>°C"</span>
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception:
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">"Temp N/A"</span>
+
+<span style="color: rgb(220, 198, 224); font-weight: 400;">def</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">get_mem_usage</span>():
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        MemUsage = subprocess.check_output(<span style="color: rgb(171, 227, 56); font-weight: 400;">"free -m | awk 'NR==2{printf \"%.0fMB / %.0fMB (%.0f%%)\", $3,$2,$3*100/$2 }'"</span>, shell=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>).decode(<span style="color: rgb(171, 227, 56); font-weight: 400;">"utf-8"</span>).strip()
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> MemUsage
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception:
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">"RAM Fehler"</span>
+
+<span style="color: rgb(220, 198, 224); font-weight: 400;">def</span> <span style="color: rgb(0, 224, 224); font-weight: 400;">get_disk_usage</span>():
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+        DiskUsage = subprocess.check_output(<span style="color: rgb(171, 227, 56); font-weight: 400;">"df -h | awk '$NF==\"/\"{printf \"Disk: %s/%s (%s)\", $3,$2,$5}'"</span>, shell=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>).decode(<span style="color: rgb(171, 227, 56); font-weight: 400;">"utf-8"</span>).strip()
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> DiskUsage
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception:
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">return</span> <span style="color: rgb(171, 227, 56); font-weight: 400;">"Disk Fehler"</span>
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># HAUPTPROGRAMM</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------</span>
+<span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> __name__ == <span style="color: rgb(171, 227, 56); font-weight: 400;">"__main__"</span>:
+    
+    display, led, button = initialize_hardware()
+    
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Zeitstempel für das Display-Update</span>
+    last_update = <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>
+    
+    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Status für Taster-Entprellung</span>
+    button_pressed_time = <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>
+    SHUTDOWN_THRESHOLD = <span style="color: rgb(245, 171, 53); font-weight: 400;">0.2</span> <span style="color: rgb(212, 208, 171); font-weight: 400;"># 200ms</span>
+    shutting_down = <span style="color: rgb(245, 171, 53); font-weight: 400;">False</span>
+
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> display:
+        <span style="color: rgb(212, 208, 171); font-weight: 400;"># Puffer für das Querformat (320x170)</span>
+        WIDTH = <span style="color: rgb(245, 171, 53); font-weight: 400;">320</span>
+        HEIGHT = <span style="color: rgb(245, 171, 53); font-weight: 400;">170</span>
+        image = Image.new(<span style="color: rgb(171, 227, 56); font-weight: 400;">"RGB"</span>, (WIDTH, HEIGHT))
+        draw = ImageDraw.Draw(image)
+
+        <span style="color: rgb(212, 208, 171); font-weight: 400;"># --- Fonts ---</span>
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+            font_large = ImageFont.truetype(<span style="color: rgb(171, 227, 56); font-weight: 400;">"/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">24</span>)
+            font_medium = ImageFont.truetype(<span style="color: rgb(171, 227, 56); font-weight: 400;">"/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">16</span>)
+            font_small = ImageFont.truetype(<span style="color: rgb(171, 227, 56); font-weight: 400;">"/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">12</span>)
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> IOError:
+            font_large = ImageFont.load_default()
+            font_medium = ImageFont.load_default()
+            font_small = ImageFont.load_default()
+
+        <span style="color: rgb(212, 208, 171); font-weight: 400;"># Positionen</span>
+        TITLE_Y = <span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>
+        IP_Y = <span style="color: rgb(245, 171, 53); font-weight: 400;">40</span>
+        CPU_Y = <span style="color: rgb(245, 171, 53); font-weight: 400;">80</span>
+        MEM_Y = <span style="color: rgb(245, 171, 53); font-weight: 400;">120</span>
+        DISK_Y = <span style="color: rgb(245, 171, 53); font-weight: 400;">150</span>
+
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Starte Hauptschleife..."</span>)
+
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">while</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">not</span> shutting_down:
+            current_time = time.time()
+
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># --- Taster-Abfrage (Polling) ---</span>
+            <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button:
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Taster.value ist False, wenn er gedrückt wird (wegen Pull.UP)</span>
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">not</span> button.value:
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button_pressed_time == <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>:
+                        <span style="color: rgb(212, 208, 171); font-weight: 400;"># Taster wurde gerade eben gedrückt</span>
+                        button_pressed_time = current_time
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">else</span>:
+                    <span style="color: rgb(212, 208, 171); font-weight: 400;"># Taster ist nicht gedrückt, setze Timer zurück</span>
+                    button_pressed_time = <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>
+
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Prüfe, ob der Taster lange genug gedrückt wurde (Entprellung)</span>
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button_pressed_time &gt; <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">and</span> (current_time - button_pressed_time &gt; SHUTDOWN_THRESHOLD):
+                    <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Taster gedrückt! System fährt jetzt herunter."</span>)
+                    shutting_down = <span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>
+                    
+                    <span style="color: rgb(212, 208, 171); font-weight: 400;"># LED blinkt zur Bestätigung</span>
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> led:
+                        <span style="color: rgb(220, 198, 224); font-weight: 400;">for</span> _ <span style="color: rgb(220, 198, 224); font-weight: 400;">in</span> <span style="color: rgb(245, 171, 53); font-weight: 400;">range</span>(<span style="color: rgb(245, 171, 53); font-weight: 400;">3</span>):
+                            led.value = <span style="color: rgb(245, 171, 53); font-weight: 400;">False</span>
+                            time.sleep(<span style="color: rgb(245, 171, 53); font-weight: 400;">0.1</span>)
+                            led.value = <span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>
+                            time.sleep(<span style="color: rgb(245, 171, 53); font-weight: 400;">0.1</span>)
+                        led.value = <span style="color: rgb(245, 171, 53); font-weight: 400;">False</span> <span style="color: rgb(212, 208, 171); font-weight: 400;"># LED aus vor Shutdown</span>
+                    
+                    <span style="color: rgb(212, 208, 171); font-weight: 400;"># --- NEU: Display vor dem Shutdown löschen ---</span>
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> display:
+                        <span style="color: rgb(220, 198, 224); font-weight: 400;">try</span>:
+                            <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Lösche Display vor Shutdown..."</span>)
+                            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Schwarzen Hintergrund zeichnen (auf das 320x170 Bild)</span>
+                            draw.rectangle((<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, WIDTH, HEIGHT), fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>))
+                            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Das 320x170 Bild rotieren (damit es zur 170x320 Hardware passt)</span>
+                            rotated_image = image.rotate(<span style="color: rgb(245, 171, 53); font-weight: 400;">270</span>, expand=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>)
+                            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Das schwarze Bild an das Display senden</span>
+                            display.image(rotated_image)
+                        <span style="color: rgb(220, 198, 224); font-weight: 400;">except</span> Exception <span style="color: rgb(220, 198, 224); font-weight: 400;">as</span> e:
+                            <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">f"Fehler beim Löschen des Displays: <span style="color: rgb(171, 227, 56); font-weight: 400;">{e}</span>"</span>)
+                    <span style="color: rgb(212, 208, 171); font-weight: 400;"># -------------------------------------------</span>
+                    
+                    os.system(<span style="color: rgb(171, 227, 56); font-weight: 400;">"sudo shutdown -h now"</span>)
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">break</span> <span style="color: rgb(212, 208, 171); font-weight: 400;"># Schleife verlassen</span>
+
+
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># --- Display-Update (alle 5 Sekunden) ---</span>
+            <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> current_time - last_update &gt; <span style="color: rgb(245, 171, 53); font-weight: 400;">5.0</span>:
+                last_update = current_time
+                
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Hintergrund löschen (Dunkelgrau)</span>
+                draw.rectangle((<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, WIDTH, HEIGHT), fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">34</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">34</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">34</span>))
+
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Daten abrufen</span>
+                ip_addr = get_ip_address()
+                cpu_temp = get_cpu_temp()
+                mem_usage = get_mem_usage()
+                disk_usage = get_disk_usage()
+
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Titel zeichnen</span>
+                draw.text((<span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>, TITLE_Y), <span style="color: rgb(171, 227, 56); font-weight: 400;">"Media Server Status"</span>, font=font_large, fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>))
+                draw.text((<span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>, IP_Y), <span style="color: rgb(171, 227, 56); font-weight: 400;">f"IP: <span style="color: rgb(171, 227, 56); font-weight: 400;">{ip_addr}</span>"</span>, font=font_large, fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>))
+                draw.text((<span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>, CPU_Y), <span style="color: rgb(171, 227, 56); font-weight: 400;">f"CPU-Temp: <span style="color: rgb(171, 227, 56); font-weight: 400;">{cpu_temp}</span>"</span>, font=font_medium, fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>))
+                draw.text((<span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>, MEM_Y), <span style="color: rgb(171, 227, 56); font-weight: 400;">f"RAM: <span style="color: rgb(171, 227, 56); font-weight: 400;">{mem_usage}</span>"</span>, font=font_medium, fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">150</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">150</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>))
+                
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Disk-Nutzung (KORRIGIERT: Größe und Farbe)</span>
+                draw.text((<span style="color: rgb(245, 171, 53); font-weight: 400;">10</span>, DISK_Y), disk_usage, font=font_medium, fill=(<span style="color: rgb(245, 171, 53); font-weight: 400;">150</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">150</span>, <span style="color: rgb(245, 171, 53); font-weight: 400;">255</span>))
+                
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Rotiere das gezeichnete Bild (320x170) um 270 Grad, </span>
+                rotated_image = image.rotate(<span style="color: rgb(245, 171, 53); font-weight: 400;">270</span>, expand=<span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>)
+                
+                <span style="color: rgb(212, 208, 171); font-weight: 400;"># Bild an das Display senden</span>
+                display.image(rotated_image)
+
+            <span style="color: rgb(212, 208, 171); font-weight: 400;"># Kurze Pause, um die CPU nicht zu überlasten</span>
+            time.sleep(<span style="color: rgb(245, 171, 53); font-weight: 400;">0.05</span>) <span style="color: rgb(212, 208, 171); font-weight: 400;"># Prüft den Taster alle 50ms</span>
+            
+    <span style="color: rgb(220, 198, 224); font-weight: 400;">else</span>:
+        <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Display-Initialisierung fehlgeschlagen. Starte Notfallschleife (nur Taster)."</span>)
+        <span style="color: rgb(220, 198, 224); font-weight: 400;">while</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">not</span> shutting_down:
+            current_time = time.time()
+            <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button:
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">not</span> button.value:
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button_pressed_time == <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>:
+                        button_pressed_time = current_time
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">else</span>:
+                    button_pressed_time = <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span>
+
+                <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> button_pressed_time &gt; <span style="color: rgb(245, 171, 53); font-weight: 400;">0</span> <span style="color: rgb(220, 198, 224); font-weight: 400;">and</span> (current_time - button_pressed_time &gt; SHUTDOWN_THRESHOLD):
+                    <span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Taster (Notfall) gedrückt! System fährt jetzt herunter."</span>)
+                    shutting_down = <span style="color: rgb(245, 171, 53); font-weight: 400;">True</span>
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">if</span> led:
+                        led.value = <span style="color: rgb(245, 171, 53); font-weight: 400;">False</span>
+                    os.system(<span style="color: rgb(171, 227, 56); font-weight: 400;">"sudo shutdown -h now"</span>)
+                    <span style="color: rgb(220, 198, 224); font-weight: 400;">break</span>
+            time.sleep(<span style="color: rgb(245, 171, 53); font-weight: 400;">0.05</span>)</pre>
+          </code>
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;"># File erstellen</span>
+sudo nano /etc/systemd/system/display_status.service</pre>
+          </code>
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;"># Code copy-pasten und speichern</span>
+[Unit]
+Description=Media Server Status Display (ST7789)
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Startet erst nach dem Netzwerk und bei aktivem Multi-User-Modus.</span>
+After=network.target multi-user.target
+
+[Service]
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Setzt den Benutzer, unter dem das Skript läuft.</span>
+
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;">#BENUTZERNAME ANPASSEN!</span>
+User=adspi
+
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Startet den Prozess aus dem Home-Verzeichnis des Benutzers</span>
+WorkingDirectory=/home/adspi/
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># NEU: Erzwingt eine 10-sekündige Wartezeit</span>
+ExecStartPre=/bin/sleep 10
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Starten des Skripts aus der virtuellen Umgebung</span>
+ExecStart=/home/adspi/env/bin/python3 /home/adspi/system_status.py
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Startet das Skript nach einem Fehler sofort neu</span>
+Restart=always
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Leitet die Skript-Ausgabe in das System-Log um (journalctl)</span>
+StandardOutput=journal
+
+[Install]
+<span style="color: rgb(212, 208, 171); font-weight: 400;"># Dienst wird beim normalen Startvorgang aktiviert</span>
+WantedBy=multi-user.target</pre>
+          </code>
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Aktivieren und System neustarten</span>
+sudo systemctl daemon-reload
+sudo systemctl <span style="color: rgb(245, 171, 53); font-weight: 400;">enable</span> display_status.service
+sudo reboot</pre>
+          </code>
           <img class="slide" src="../media/image1.png" display="none" />
         </div>
       </section>

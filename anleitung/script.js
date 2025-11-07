@@ -98,7 +98,7 @@ function toc() {
     { file: "a3.html", title: "3. Plex" },
     { file: "a4.html", title: "4. Case" },
     { file: "a5.html", title: "5. Verkabelung" },
-    { file: "a6.html", title: "6. X" },
+    { file: "a6.html", title: "6. Display & Button" },
   ];
 
   //Inhaltsverzeichnis befüllen
