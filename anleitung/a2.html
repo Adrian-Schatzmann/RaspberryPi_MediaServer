@@ -32,86 +32,66 @@
 
     <main class="anleitung">
       <h1 class="title">Anleitung.</h1>
-      
+
 <!--Inhaltsverzeichnis wird von JS generiert-->
       <section class="toc card">
         <h2>Inhaltsverzeichnis</h2>
         <ul></ul>
       </section>
 
-      <!--Anleitungstext-->
+<!--Anleitungstext-->
       <section class="tutorialText">
-        <h2>2. Dependencies</h2>
-        <p>Für das weitere Vorgehen müssen einige Pakete installiert werden:</p>
+        <h2>2. Raspberry Pi Setup</h2>
+        <p>Als erstes installieren wir das OS auf der SD-Karte und stellen eine SSH Verbindung her:</p>
         <ul>
-          <li data-highlight-group="0">System und Python aktualisieren, setuptools installieren</li>
-          <li data-highlight-group="1">In neueren Raspberry OS Versionen müssen wir in einer virtuellen Umgebung arbeiten. Diese mit den Commands rechts erstellen und aktivieren. Wir arbeiten immer in dieser, falls sie also nach einem Neustart nicht aktiv ist, erneut mit source env/bin/activate aktivieren</li>
-          <li data-highlight-group="2">Die Commands rechts ausführen. Dadurch wird automatisch Blinka installiert und konfiguriert.</li>
-          <li data-highlight-group="3">Blinka testen: Mit dem Code rechts ein Testskript erstellen</li>
-          <li data-highlight-group="4">Der nano-Editor sollte jetzt geöffnet sein</li>
-          <li data-highlight-group="5">Den Code hineinkopieren. Mit ctrl + x, dann y, dann Enter speichern</li>
-          <li data-highlight-group="6">Das Skript ausführen. Der Output sollte mit dem Beispiel übereinstimmen</li>
+          <li data-highlight-group="0">
+            <a href="https://www.raspberrypi.com/software/" target="_blank"
+              >Raspberry Pi Imager</a
+            >
+            herunterladen und installieren
+          </li>
+          <li data-highlight-group="0">SD Karte an das MacBook anschliessen</li>
+          <li data-highlight-group="0">
+            Im Raspberry Pi Imager das Modell, OS und die SD Karte auswählen
+          </li>
+          <li data-highlight-group="1, 2, 3">
+            Im nächsten Schritt die Einstellungen anpassen, siehe Bilder
+          </li>
+          <li data-highlight-group="4">
+            OS auf die SD Karte schreiben lassen. Danach die SD Karte ans
+            Raspberry Pi anschliessen
+          </li>
+          <li data-highlight-group="5">
+            Über USB-C ein Netzteil anschliessen (5V, min. 3A)
+          </li>
+          <li data-highlight-group="5">
+            Das Raspberry Pi bootet automaisch. Die rote LED sollte leuchten und
+            die grüne blinken
+          </li>
+          <li data-highlight-group="6">
+            Per SSH mit dem Raspberry Pi verbinden. Dazu den zu zuvor
+            definierten Hostnamen verwenden.
+          </li>
         </ul>
       </section>
 
       <!--Bilder/Code Slider-->
       <section class="tutorialImage">
         <div id="slider" class="slider">
+          <img class="slide" src="../media/piSetup/1.png" display="none" />
+          <img class="slide" src="../media/piSetup/2.png" display="none" />
+          <img class="slide" src="../media/piSetup/3.png" display="none" />
+          <img class="slide" src="../media/piSetup/4.png" display="none" />
+          <img class="slide" src="../media/piSetup/5.png" display="none" />
+          <img class="slide" src="../media/piSetup/6.jpg" display="none" />
           <code class="slide" display="none">
-<pre>
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Update PI</span>
-sudo apt-get update
-sudo apt-get -y upgrade
-sudo apt-get install -y python3-pip
-sudo apt install --upgrade python3-setuptools</pre>
-          </code>
-                    <code class="slide" display="none">
-<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Virtual enviroment setup</span>
-<span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> ~
-sudo apt install python3-venv
-python3 -m venv <span style="color: rgb(245, 171, 53); font-weight: 400;">env</span> --system-site-packages
-<span style="color: rgb(245, 171, 53); font-weight: 400;">source</span> <span style="color: rgb(245, 171, 53); font-weight: 400;">env</span>/bin/activate</pre>
-          </code>
-                    <code class="slide" display="none">
-<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Blinka installation</span>
-<span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> ~
-pip3 install --upgrade adafruit-python-shell
-wget https://raw.githubusercontent.com/adafruit/\
-Raspberry-Pi-Installer-Scripts/master/raspi-blinka.py
-sudo -E <span style="color: rgb(245, 171, 53); font-weight: 400;">env</span> PATH=<span style="color: rgb(255, 160, 122); font-weight: 400;">$PATH</span> python3 raspi-blinka.py</pre>
-          </code>
-                    <code class="slide" display="none">
-<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Blinka Test</span>
-<span style="color: rgb(245, 171, 53); font-weight: 400;">source</span> ~/env/bin/activate
-<span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">$HOME</span>
-nano blinkatest.py</pre>
-          </code>
-          <img class="slide" src="../media/dependencies/nano.png" display="none" />
-          <code class="slide" display="none">
-            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Per copy-paste einfügen</span>
-<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> board
-<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> digitalio
-<span style="color: rgb(220, 198, 224); font-weight: 400;">import</span> busio
-<span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Hello, blinka!"</span>)
-pin = digitalio.DigitalInOut(board.D4)
-<span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"Digital IO ok!"</span>)
-i2c = busio.I2C(board.SCL, board.SDA)
-<span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"I2C ok!"</span>)
-spi = busio.SPI(board.SCLK, board.MOSI, board.MISO)
-<span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"SPI ok!"</span>)
-<span style="color: rgb(245, 171, 53); font-weight: 400;">print</span>(<span style="color: rgb(171, 227, 56); font-weight: 400;">"done!"</span>)
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Speichern mit Ctrl + X, dann Y, dann Enter</span></pre>
-          </code>
-          <code class="slide" display="none">
-            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Test ausführen:</span>
-python3 blinkatest.py
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Das Ergebnis sollte so aussehen:</span>
-
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Hello, blinka!</span>
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Digital IO ok!</span>
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#I2C ok!</span>
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#SPI ok!</span>
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#done!</span></pre>
+            <span style="color: rgb(212, 208, 171); font-weight: 400"
+              >#SSH Verbindung (Name und Hostname anpassen)</span
+            ><br />
+            ssh [BENUTZERNAME@Hostname]<br />
+            <span style="color: rgb(212, 208, 171); font-weight: 400"
+              >#z.B. ssh adspi@adspi.local</span
+            >
           </code>
         </div>
       </section>
@@ -120,12 +100,12 @@ python3 blinkatest.py
       <section class="tutorialButtons">
         <div class="buttonContainer">
           <div class="buttonAlignLeft">
-            <button id="lastBtn">Vorheriges Bild</button>
-            <button id="nextBtn">Nächstes Bild</button>
+            <button id="lastBtn">Vorheriger Schritt</button>
+            <button id="nextBtn">Nächster Schritt</button>
           </div>
           <div class="buttonAlignRight">
-            <a href="a1.html"><button id="prevBtn">Zurück</button></a>
-            <a href="a3.html"><button id="nextBtn">Weiter</button></a>
+            <a href="a1.html"><button id="prevBtn">Letztes Kapitel</button></a>
+            <a href="a3.html"><button id="nextBtn">Nächstes Kapitel</button></a>
           </div>
         </div>
       </section>

@@ -93,12 +93,13 @@ Inhaltsverzeichnis der Anleitung
 function toc() {
   //Kapitel definieren
   const chapters = [
-    { file: "a1.html", title: "1. Raspberry Pi Setup" },
-    { file: "a2.html", title: "2. Dependencies" },
-    { file: "a3.html", title: "3. Plex" },
-    { file: "a4.html", title: "4. Case" },
+    { file: "a1.html", title: "1. 3D Druck" },
+    { file: "a2.html", title: "2. Raspberry Pi Setup" },
+    { file: "a3.html", title: "3. Dependencies" },
+    { file: "a4.html", title: "4. Plex" },
     { file: "a5.html", title: "5. Verkabelung" },
-    { file: "a6.html", title: "6. Display & Button" },
+    { file: "a6.html", title: "6. Case" },
+    { file: "a7.html", title: "7. Display & Button" },
   ];
 
   //Inhaltsverzeichnis befüllen

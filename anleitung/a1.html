@@ -32,45 +32,21 @@
 
     <main class="anleitung">
       <h1 class="title">Anleitung.</h1>
-
+      
 <!--Inhaltsverzeichnis wird von JS generiert-->
       <section class="toc card">
         <h2>Inhaltsverzeichnis</h2>
         <ul></ul>
       </section>
 
-<!--Anleitungstext-->
+      <!--Anleitungstext-->
       <section class="tutorialText">
-        <h2>1. Raspberry Pi Setup</h2>
-        <p>Als erstes installieren wir das OS auf der SD-Karte und stellen eine SSH Verbindung her:</p>
+        <h2>1. 3D Druck</h2>
+        <p>Als erstes brauchen wir einige 3D gedruckte Bauteile:</p>
         <ul>
-          <li data-highlight-group="0">
-            <a href="https://www.raspberrypi.com/software/" target="_blank"
-              >Raspberry Pi Imager</a
-            >
-            herunterladen und installieren
-          </li>
-          <li data-highlight-group="0">SD Karte an das MacBook anschliessen</li>
-          <li data-highlight-group="0">
-            Im Raspberry Pi Imager das Modell, OS und die SD Karte auswählen
-          </li>
-          <li data-highlight-group="1, 2, 3">
-            Im nächsten Schritt die Einstellungen anpassen, siehe Bilder
-          </li>
-          <li data-highlight-group="4">
-            OS auf die SD Karte schreiben lassen. Danach die SD Karte ans
-            Raspberry Pi anschliessen
-          </li>
-          <li data-highlight-group="5">
-            Über USB-C ein Netzteil anschliessen (5V, min. 3A)
-          </li>
-          <li data-highlight-group="5">
-            Das Raspberry Pi bootet automaisch. Die rote LED sollte leuchten und
-            die grüne blinken
-          </li>
-          <li data-highlight-group="6">
-            Per SSH mit dem Raspberry Pi verbinden. Dazu den zu zuvor
-            definierten Hostnamen verwenden.
+          <li data-highlight-group="0">Folgende Dateien herunterladen: <br> <a href="https://cdn-learn.adafruit.com/assets/assets/000/114/911/original/Guide_STLs_V2.zip?1662933041" target="_blank">Case Dateien</a> <br> <a href="TODO" target="_blank">Display Halterung</a> </li>
+          <li data-highlight-group="1">Bei den Case Dateien kann "Pi-SSD-button-mount.stl" und "Pi-SSD-fan-30mm.stl" gelöscht werden</li>
+          <li data-highlight-group="2">Alle 6 Teile je einmal drucken. Der Vorgang ist je nach Drucker etwas unterschiedlich und wird hier nicht im detail beschrieben</li>
           </li>
         </ul>
       </section>
@@ -78,21 +54,7 @@
       <!--Bilder/Code Slider-->
       <section class="tutorialImage">
         <div id="slider" class="slider">
-          <img class="slide" src="../media/piSetup/1.png" display="none" />
-          <img class="slide" src="../media/piSetup/2.png" display="none" />
-          <img class="slide" src="../media/piSetup/3.png" display="none" />
-          <img class="slide" src="../media/piSetup/4.png" display="none" />
-          <img class="slide" src="../media/piSetup/5.png" display="none" />
-          <img class="slide" src="../media/piSetup/6.jpg" display="none" />
-          <code class="slide" display="none">
-            <span style="color: rgb(212, 208, 171); font-weight: 400"
-              >#SSH Verbindung (Name und Hostname anpassen)</span
-            ><br />
-            ssh [BENUTZERNAME@Hostname]<br />
-            <span style="color: rgb(212, 208, 171); font-weight: 400"
-              >#z.B. ssh adspi@adspi.local</span
-            >
-          </code>
+
         </div>
       </section>
 
@@ -104,7 +66,6 @@
             <button id="nextBtn">Nächstes Bild</button>
           </div>
           <div class="buttonAlignRight">
-            <a href="a1.html"><button id="prevBtn">Zurück</button></a>
             <a href="a2.html"><button id="nextBtn">Weiter</button></a>
           </div>
         </div>

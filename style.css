@@ -270,9 +270,9 @@ main.anleitung {
   grid-template-rows: auto 90px 1fr;
   grid-template-areas:
     "title title title title"
-    "text buttons buttons buttons"
-    "text image image toc"
-    "text image image toc";
+    "toc buttons buttons buttons"
+    "toc image image text"
+    "toc image image text";
 }
 
 /*Settings für "slider" Bilder*/
