@@ -262,17 +262,22 @@ main.anleitung h2 {
   grid-area: toc;
 }
 
+.toc ul {
+  list-style-type: none;
+  padding-left: 0px;
+}
+
 main.anleitung {
-  max-width: 80%;
+  max-width: 90%;
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(5, 1fr);
   grid-template-rows: auto 90px 1fr;
   grid-template-areas:
-    "title title title title"
-    "toc buttons buttons buttons"
-    "toc image image text"
-    "toc image image text";
+    "title title title title title"
+    "toc buttons buttons buttons buttons"
+    "toc image image text text"
+    "toc image image text text";
 }
 
 /*Settings für "slider" Bilder*/
