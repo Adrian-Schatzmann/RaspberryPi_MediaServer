@@ -3,8 +3,29 @@ Allgemein
 ------------------------------*/
 //Array mit allen Elenemten der Klasse "slide" innerhalb von Elementen mit der ID "slider" erstellen
 const slides = document.querySelectorAll("#slider .slide");
-//Variable für aktuelle Bildposition
+//Aktuelle Bildposition
 let current = 0;
+//Aktuelle Seitenzahl für die Anleitung speichern
+const currentSite = parseInt(
+  new URL(window.location.href).pathname
+    .split("/") //hintersten Teil isolieren
+    .pop()
+    .replace(".html", "") //Endung entfernen
+    .replace(/\D/g, ""), // entfernt alles, was keine Zahl ist
+  10 //Dezimalsystem
+);
+
+//Kapitel definieren
+const chapters = [
+  { file: "a1.html", title: "1. 3D Druck" },
+  { file: "a2.html", title: "2. Raspberry Pi Setup" },
+  { file: "a3.html", title: "3. Dependencies" },
+  { file: "a4.html", title: "4. Verkabelung" },
+  { file: "a5.html", title: "5. Case" },
+  { file: "a6.html", title: "6. Display & Button" },
+  { file: "a7.html", title: "7. SSD" },
+  { file: "a8.html", title: "8. Plex" },
+];
 
 //Inhaltsverzeichnis generieren
 toc();
@@ -17,6 +38,11 @@ Bildwechsel
 ------------------------------*/
 //Nächstes Bild anzeigen
 function nextImage() {
+  if (current == slides.length - 1 && currentSite < chapters.length) {
+    window.location.href = "a" + (currentSite + 1) + ".html";
+    return;
+  }
+
   slides[current].style.display = "none"; // aktuelles Bild ausblenden
   current = (current + 1) % slides.length; // nächstes Bild, mit Rücksprung am Ende
   slides[current].style.display = "block"; // neues Bild einblenden
@@ -25,6 +51,10 @@ function nextImage() {
 
 //Vorheriges Bild anzeigen
 function previousImage() {
+  if (current == 0 && currentSite != 1) {
+    window.location.href = "a" + (currentSite - 1) + ".html";
+    return;
+  }
   slides[current].style.display = "none"; // aktuelles Bild ausblenden
   current = (current - 1 + slides.length) % slides.length; // vorheriges Bild, mit Rücksprung am Anfang
   slides[current].style.display = "block"; // neues Bild einblenden
@@ -91,18 +121,6 @@ document.addEventListener("keydown", function (event) {
 Inhaltsverzeichnis der Anleitung
 ------------------------------*/
 function toc() {
-  //Kapitel definieren
-  const chapters = [
-    { file: "a1.html", title: "1. 3D Druck" },
-    { file: "a2.html", title: "2. Raspberry Pi Setup" },
-    { file: "a3.html", title: "3. Dependencies" },
-    { file: "a4.html", title: "4. Verkabelung" },
-    { file: "a5.html", title: "5. Case" },
-    { file: "a6.html", title: "6. Display & Button" },
-    { file: "a7.html", title: "7. SSD" },
-    { file: "a7.html", title: "8. Plex" },
-  ];
-
   //Inhaltsverzeichnis befüllen
   const toc = document.querySelector(".toc ul");
   chapters.forEach((chap) => {
