@@ -45,21 +45,20 @@
         <p>Für das weitere Vorgehen müssen einige Pakete installiert werden:</p>
         <ul>
           <li data-highlight-group="0">
-            System und Python aktualisieren, setuptools installieren
+            System aktualisieren, diverse dependencies installieren
           </li>
           <li data-highlight-group="1">
             In neueren Raspberry OS Versionen müssen wir in einer virtuellen
-            Umgebung arbeiten. Diese mit den Commands rechts erstellen und
-            aktivieren. Wir arbeiten immer in dieser, falls sie also nach einem
+            Umgebung arbeiten. Diese mit den Commands erstellen und
+            aktivieren. Wir arbeiten immer in dieser. Falls sie also nach einem
             Neustart nicht aktiv ist, erneut mit source env/bin/activate
             aktivieren
           </li>
           <li data-highlight-group="2">
-            Die Commands rechts ausführen. Dadurch wird automatisch Blinka
-            installiert und konfiguriert.
+            Blinka installieren und konfigurieren
           </li>
           <li data-highlight-group="3">
-            Blinka testen: Mit dem Code rechts ein Testskript erstellen
+            Blinka testen: Mit dem Code ein Testskript erstellen
           </li>
           <li data-highlight-group="4">
             Der nano-Editor sollte jetzt geöffnet sein
@@ -83,7 +82,9 @@
 sudo apt-get update
 sudo apt-get -y upgrade
 sudo apt-get install -y python3-pip
-sudo apt install --upgrade python3-setuptools</pre>
+sudo apt install --upgrade python3-setuptools
+pip3 install Pillow
+pip3 install adafruit-circuitpython-rgb-display</pre>
           </code>
           <code class="slide" display="none">
             <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Virtual enviroment setup</span>
