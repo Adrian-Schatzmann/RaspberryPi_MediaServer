@@ -159,6 +159,7 @@ button.addEventListener("click", () => {
     .then(text => {
       return navigator.clipboard.writeText(text);
     })
+    console.log("test");
     .then(() => {
       alert("Text wurde in die Zwischenablage kopiert!");
     })
