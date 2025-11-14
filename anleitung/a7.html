@@ -120,9 +120,10 @@ sudo smbpasswd -e adspi
 sudo <span style="color: rgb(245, 171, 53); font-weight: 400;">chown</span> -R adspi:adspi /mnt/ssd
 sudo <span style="color: rgb(245, 171, 53); font-weight: 400;">chmod</span> -R 775 /mnt/ssd
 
-<span style="color: rgb(212, 208, 171); font-weight: 400;">#Samba neu starten</span>
+<span style="color: rgb(212, 208, 171); font-weight: 400;">#Samba und System neu starten</span>
 sudo systemctl restart smbd
-sudo systemctl <span style="color: rgb(245, 171, 53); font-weight: 400;">enable</span> smbd</pre>
+sudo systemctl
+sudo reboot <span style="color: rgb(245, 171, 53); font-weight: 400;">enable</span> smbd</pre>
           </code>
           <img class="slide" src="../media/ssd/test.png" display="none" />
           <img class="slide" src="../media/ssd/ordner.png" display="none" />
