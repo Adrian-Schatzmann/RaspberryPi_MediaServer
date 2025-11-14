@@ -210,7 +210,7 @@ main.impressum {
   grid-template-areas:
     "title title title"
     "owner responsible contact"
-    "info info info"
+    "info info info";
 }
 
 main.impressum .card h2 {

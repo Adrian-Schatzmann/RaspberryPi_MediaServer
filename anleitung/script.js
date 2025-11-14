@@ -69,7 +69,7 @@ function previousImage() {
 function jumpToSlide(event) {
   //Das angeklickte Element (z.B. das <li>)
   const clickedElement = event.currentTarget;
-  
+
   //Lese das Attribut, z.B. "0" or "1, 2"
   const groupData = clickedElement.dataset.highlightGroup;
 
@@ -82,7 +82,7 @@ function jumpToSlide(event) {
     console.error("Ungültige data-highlight-group für Sprung:", groupData);
     return;
   }
-  
+
   //Wenn wir schon auf dem richtigen Slide sind, nichts tun
   if (targetIndex === current) {
     return;
@@ -94,11 +94,10 @@ function jumpToSlide(event) {
   current = targetIndex;
   //Neuen Slide einblenden
   slides[current].style.display = "block";
-  
+
   //Highlights aktualisieren
   highlightCurrentStep();
 }
-
 
 /*------------------------------
 Highlight-System
@@ -134,13 +133,14 @@ document.getElementById("nextBtn").addEventListener("click", nextImage);
 document.getElementById("lastBtn").addEventListener("click", previousImage);
 
 //Event-Listener für alle Text-Elemente, die Highlights haben
-const highlightableElements = document.querySelectorAll("[data-highlight-group]");
-highlightableElements.forEach(element => {
+const highlightableElements = document.querySelectorAll(
+  "[data-highlight-group]"
+);
+highlightableElements.forEach((element) => {
   element.addEventListener("click", jumpToSlide);
   //Zeigt dem Benutzer, dass der Text klickbar ist
-  element.style.cursor = "pointer"; 
+  element.style.cursor = "pointer";
 });
-
 
 //Event Listener für Tastendrücke
 document.addEventListener("keydown", function (event) {
@@ -205,25 +205,31 @@ if (button) {
   button.addEventListener("click", () => {
     console.log("Button wurde geklickt!");
     //Text von externer Datei laden
-    fetch('script.txt')
-      .then(response => {
+    fetch("script.txt")
+      .then((response) => {
         //Bessere Fehlerprüfung für 404
         if (!response.ok) {
-          throw new Error('Datei script.txt nicht gefunden oder konnte nicht geladen werden.');
+          throw new Error(
+            "Datei script.txt nicht gefunden oder konnte nicht geladen werden."
+          );
         }
         return response.text();
       })
-      .then(text => {
+      .then((text) => {
         return navigator.clipboard.writeText(text);
       })
       .then(() => {
-        button.innerText = "Kopiert!"; 
-        setTimeout(() => { button.innerText = "Python-Skript kopieren"; }, 2000);
+        button.innerText = "Kopiert!";
+        setTimeout(() => {
+          button.innerText = "Python-Skript kopieren";
+        }, 2000);
       })
-      .catch(err => {
+      .catch((err) => {
         console.error("Fehler: ", err);
         button.innerText = "Fehler beim Kopieren";
-        setTimeout(() => { button.innerText = "Python-Skript kopieren"; }, 3000);
+        setTimeout(() => {
+          button.innerText = "Python-Skript kopieren";
+        }, 3000);
       });
   });
 }

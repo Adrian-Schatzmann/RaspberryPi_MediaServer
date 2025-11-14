@@ -32,8 +32,8 @@
 
     <main class="anleitung">
       <h1 class="title">Anleitung.</h1>
-      
-<!--Inhaltsverzeichnis wird von JS generiert-->
+
+      <!--Inhaltsverzeichnis wird von JS generiert-->
       <section class="toc card">
         <h2>Inhaltsverzeichnis</h2>
         <ul></ul>
@@ -42,15 +42,39 @@
       <!--Anleitungstext-->
       <section class="tutorialText">
         <h2>6. Display & Button</h2>
-        <p>Ein SPI (Serial Peripheral Interface) muss freigegeben und dann ein Skript erstellt werden, das beim Start automatisch ausgeführt wird. Dazu das Raspberry Pi wieder starten und per SSH verbinden.</p>
+        <p>
+          Ein SPI (Serial Peripheral Interface) muss freigegeben und dann ein
+          Skript erstellt werden, das beim Start automatisch ausgeführt wird.
+          Dazu das Raspberry Pi wieder starten und per SSH verbinden.
+        </p>
         <ul>
-          <li data-highlight-group="0">Um den SPI freizugeben, muss eine configdatei geändert werden. Anschliessend ist ein reboot zwingend (sudo reboot). Danach das virtual enviroment wieder aktivieren!</li>
-          <li data-highlight-group="1">Wie beim Blinka Test ein Skriptfile erstellen</li>
-          <li data-highlight-group="2">Den Code in das Skript copy-pasten. Mit ctrl + x, dann y, dann Enter speichern</li>
-          <li data-highlight-group="3">Für den Autostart brauchen wir eine neue Datei</li>
-          <li data-highlight-group="4">Den Code copy-pasten und speichern. Hier muss der Benutzername zwingend angepasst werden (user=x).</li>
-          <li data-highlight-group="5">Den Autostart aktivieren und das System neustarten. Danach das virtual enviroment wieder aktivieren</li>
-          <li data-highlight-group="6">Das Display sollte jetzt Systeminfos anzeigen. Mit dem Powerbutton lässt sich der Server ein- und ausschalten (kurz gedrückt halten)</li>
+          <li data-highlight-group="0">
+            Um den SPI freizugeben, muss eine configdatei geändert werden.
+            Anschliessend ist ein reboot zwingend (sudo reboot). Danach das
+            virtual enviroment wieder aktivieren!
+          </li>
+          <li data-highlight-group="1">
+            Wie beim Blinka Test ein Skriptfile erstellen
+          </li>
+          <li data-highlight-group="2">
+            Den Code in das Skript copy-pasten. Mit ctrl + x, dann y, dann Enter
+            speichern
+          </li>
+          <li data-highlight-group="3">
+            Für den Autostart brauchen wir eine neue Datei
+          </li>
+          <li data-highlight-group="4">
+            Den Code copy-pasten und speichern. Hier muss der Benutzername
+            zwingend angepasst werden (user=x).
+          </li>
+          <li data-highlight-group="5">
+            Den Autostart aktivieren und das System neustarten. Danach das
+            virtual enviroment wieder aktivieren
+          </li>
+          <li data-highlight-group="6">
+            Das Display sollte jetzt Systeminfos anzeigen. Mit dem Powerbutton
+            lässt sich der Server ein- und ausschalten (kurz gedrückt halten)
+          </li>
         </ul>
       </section>
 
@@ -64,12 +88,14 @@ sudo nano /boot/firmware/config.txt
 dtoverlay=spi0-1cs,cs0_pin=7</pre>
           </code>
           <code class="slide" display="none">
-<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Skriptfile erstellen</span>
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Skriptfile erstellen</span>
 <span style="color: rgb(245, 171, 53); font-weight: 400;">source</span> ~/env/bin/activate
 <span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">$HOME</span>
 nano system_status.py</pre>
           </code>
-          <button class="slide" display="none" id="copyButton">Python Skript kopieren</button>
+          <button class="slide" display="none" id="copyButton">
+            Python Skript kopieren
+          </button>
           <code class="slide" display="none">
             <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Config File erstellen</span>
 sudo nano /etc/systemd/system/display_status.service</pre>
@@ -110,7 +136,11 @@ sudo systemctl daemon-reload
 sudo systemctl <span style="color: rgb(245, 171, 53); font-weight: 400;">enable</span> display_status.service
 sudo reboot</pre>
           </code>
-          <img class="slide" src="../media/displayAndButton/infodisplay.JPG" display="none" />
+          <img
+            class="slide"
+            src="../media/displayAndButton/infodisplay.JPG"
+            display="none"
+          />
         </div>
       </section>
 
@@ -122,12 +152,13 @@ sudo reboot</pre>
             <button id="nextBtn">Nächster Schritt</button>
           </div>
           <div class="buttonAlignRight">
-            <a href="a5.html"><button id="prevBtn">Vorheriges Kapitel</button></a>
+            <a href="a5.html"
+              ><button id="prevBtn">Vorheriges Kapitel</button></a
+            >
             <a href="a7.html"><button id="nextBtn">Nächstes Kapitel</button></a>
           </div>
         </div>
       </section>
-      
     </main>
     <script src="script.js" defer></script>
   </body>
