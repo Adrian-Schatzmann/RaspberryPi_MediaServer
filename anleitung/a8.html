@@ -51,12 +51,11 @@
           <li data-highlight-group="1">Plex installieren</li>
           <li data-highlight-group="2">
             Plex mit dem Command rechts testen. Das Ergebnis sollte "Active:
-            active (running)" sein
+            active (running)" sein. Nach der Kontrolle mit control + c beenden
           </li>
           <li data-highlight-group="3">
             Das MacBook mit demselben Netzwerk verbinden, einen Browser öfnnen
-            und eine Verbindung mit dem Server herstellen (kann einen Moment
-            dauern)
+            und eine Verbindung mit dem Server herstellen. Ggf. das Plex Abo und Login überspringen
           </li>
           <li data-highlight-group="4">
             Über die Ordnerfreigabe Medien auf den Plex Server laden
@@ -78,6 +77,8 @@
           <code class="slide" display="none">
             <pre>
 <span style="color: rgb(212, 208, 171); font-weight: 400;">#Plex Repository hinzufügen und Installation</span>
+cd ~
+source env/bin/activate
 sudo install -d -m 0755 /usr/share/keyrings
 curl -fsSL https://downloads.plex.tv/plex-keys/PlexSign.key \
 | gpg --dearmor \
