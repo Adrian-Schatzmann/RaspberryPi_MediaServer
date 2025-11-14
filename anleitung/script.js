@@ -61,6 +61,45 @@ function previousImage() {
   highlightCurrentStep();
 }
 
+/**
+ * Springt direkt zu einem bestimmten Slide, basierend auf dem Klick-Event.
+ * Liest data-highlight-group aus und springt zum ERSTEN Bild in dieser Gruppe.
+ * @param {Event} event - Das Klick-Ereignis des Elements.
+ */
+function jumpToSlide(event) {
+  //Das angeklickte Element (z.B. das <li>)
+  const clickedElement = event.currentTarget;
+  
+  //Lese das Attribut, z.B. "0" or "1, 2"
+  const groupData = clickedElement.dataset.highlightGroup;
+
+  //Nimm die *erste* Zahl aus dem Attribut
+  const targetIndexStr = groupData.split(/[ ,]+/)[0];
+  const targetIndex = parseInt(targetIndexStr, 10);
+
+  //Prüfen, ob die Umwandlung gültig war und ob es die Folie gibt
+  if (isNaN(targetIndex) || targetIndex < 0 || targetIndex >= slides.length) {
+    console.error("Ungültige data-highlight-group für Sprung:", groupData);
+    return;
+  }
+  
+  //Wenn wir schon auf dem richtigen Slide sind, nichts tun
+  if (targetIndex === current) {
+    return;
+  }
+
+  //Alten Slide ausblenden
+  slides[current].style.display = "none";
+  //Neuen Index setzen
+  current = targetIndex;
+  //Neuen Slide einblenden
+  slides[current].style.display = "block";
+  
+  //Highlights aktualisieren
+  highlightCurrentStep();
+}
+
+
 /*------------------------------
 Highlight-System
 Das HTML-Attribut data-highlight-group="0,1,2" legt fest, bei welchen Bildern das Element hervorgehoben wird.
@@ -90,11 +129,20 @@ function highlightCurrentStep() {
 /*------------------------------
 Buttons & Pfeiltasten
 ------------------------------*/
-// Button-Events
+//Button-Events
 document.getElementById("nextBtn").addEventListener("click", nextImage);
 document.getElementById("lastBtn").addEventListener("click", previousImage);
 
-// Event Listener für Tastendrücke
+//Event-Listener für alle Text-Elemente, die Highlights haben
+const highlightableElements = document.querySelectorAll("[data-highlight-group]");
+highlightableElements.forEach(element => {
+  element.addEventListener("click", jumpToSlide);
+  //Zeigt dem Benutzer, dass der Text klickbar ist
+  element.style.cursor = "pointer"; 
+});
+
+
+//Event Listener für Tastendrücke
 document.addEventListener("keydown", function (event) {
   switch (event.key) {
     case "ArrowLeft":
@@ -105,7 +153,7 @@ document.addEventListener("keydown", function (event) {
       break;
   }
 
-  // Funktionen, die bei Links-/Rechts-Pfeil ausgelöst werden
+  //Funktionen, die bei Links-/Rechts-Pfeil ausgelöst werden
   function onLeftArrow() {
     console.log("← Pfeil nach links gedrückt");
     previousImage();
@@ -135,7 +183,7 @@ function toc() {
     toc.appendChild(li);
   });
 
-  // Aktuelles Kapitel hervorheben
+  //Aktuelles Kapitel hervorheben
   let tocItems = document.querySelectorAll(".toc li");
   let titleName = document.querySelector(".tutorialText h2");
 
@@ -152,18 +200,30 @@ Python Skript kopieren-Button
 //Button finden
 const button = document.getElementById("copyButton");
 
-button.addEventListener("click", () => {
-  console.log("Button wurde geklickt!");
-  // Text von externer Datei laden
-  fetch('script.txt')
-    .then(response => response.text())
-    .then(text => {
-      return navigator.clipboard.writeText(text);
-    })
-    .then(() => {
-      alert("Text wurde in die Zwischenablage kopiert!");
-    })
-    .catch(err => {
-      console.error("Fehler: ", err);
-    });
-});
+//Prüfen, ob der Button auf dieser Seite überhaupt existiert
+if (button) {
+  button.addEventListener("click", () => {
+    console.log("Button wurde geklickt!");
+    //Text von externer Datei laden
+    fetch('script.txt')
+      .then(response => {
+        //Bessere Fehlerprüfung für 404
+        if (!response.ok) {
+          throw new Error('Datei script.txt nicht gefunden oder konnte nicht geladen werden.');
+        }
+        return response.text();
+      })
+      .then(text => {
+        return navigator.clipboard.writeText(text);
+      })
+      .then(() => {
+        button.innerText = "Kopiert!"; 
+        setTimeout(() => { button.innerText = "Python-Skript kopieren"; }, 2000);
+      })
+      .catch(err => {
+        console.error("Fehler: ", err);
+        button.innerText = "Fehler beim Kopieren";
+        setTimeout(() => { button.innerText = "Python-Skript kopieren"; }, 3000);
+      });
+  });
+}

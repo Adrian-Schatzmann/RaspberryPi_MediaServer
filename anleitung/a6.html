@@ -48,7 +48,7 @@
           <li data-highlight-group="1">Wie beim Blinka Test ein Skriptfile erstellen</li>
           <li data-highlight-group="2">Den Code in das Skript copy-pasten. Mit ctrl + x, dann y, dann Enter speichern</li>
           <li data-highlight-group="3">Für den Autostart brauchen wir eine neue Datei</li>
-          <li data-highlight-group="4">Erneut den Code rechts copy-pasten und speichern. Hier muss der Benutzername zwingend angepasst werden (user=x).</li>
+          <li data-highlight-group="4">Den Code copy-pasten und speichern. Hier muss der Benutzername zwingend angepasst werden (user=x).</li>
           <li data-highlight-group="5">Den Autostart aktivieren und das System neustarten. Danach das virtual enviroment wieder aktivieren</li>
           <li data-highlight-group="6">Das Display sollte jetzt Systeminfos anzeigen. Mit dem Powerbutton lässt sich der Server ein- und ausschalten (kurz gedrückt halten)</li>
         </ul>
@@ -69,7 +69,11 @@ dtoverlay=spi0-1cs,cs0_pin=7</pre>
 <span style="color: rgb(245, 171, 53); font-weight: 400;">cd</span> <span style="color: rgb(255, 160, 122); font-weight: 400;">$HOME</span>
 nano system_status.py</pre>
           </code>
-          <button class="slide" display="none" id="copyButton">Text kopieren</button>
+          <button class="slide" display="none" id="copyButton">Python Skript kopieren</button>
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Config File erstellen</span>
+sudo nano /etc/systemd/system/display_status.service</pre>
+          </code>
           <code class="slide" display="none">
             <pre><span style="color: rgb(212, 208, 171); font-weight: 400;"># Code copy-pasten und speichern</span>
 [Unit]
@@ -106,7 +110,7 @@ sudo systemctl daemon-reload
 sudo systemctl <span style="color: rgb(245, 171, 53); font-weight: 400;">enable</span> display_status.service
 sudo reboot</pre>
           </code>
-          <img class="slide" src="../media/image1.png" display="none" />
+          <img class="slide" src="../media/displayAndButton/infodisplay.JPG" display="none" />
         </div>
       </section>
 
