@@ -145,3 +145,24 @@ function toc() {
     }
   });
 }
+
+/*------------------------------
+Python Skript kopieren-Button
+------------------------------*/
+//Button finden
+const button = document.getElementById("copyButton");
+
+button.addEventListener("click", () => {
+  // Text von externer Datei laden
+  fetch('script.txt')
+    .then(response => response.text())
+    .then(text => {
+      return navigator.clipboard.writeText(text);
+    })
+    .then(() => {
+      alert("Text wurde in die Zwischenablage kopiert!");
+    })
+    .catch(err => {
+      console.error("Fehler: ", err);
+    });
+});
