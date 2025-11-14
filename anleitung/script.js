@@ -153,13 +153,13 @@ Python Skript kopieren-Button
 const button = document.getElementById("copyButton");
 
 button.addEventListener("click", () => {
+  console.log("Button wurde geklickt!");
   // Text von externer Datei laden
   fetch('script.txt')
     .then(response => response.text())
     .then(text => {
       return navigator.clipboard.writeText(text);
     })
-    console.log("test");
     .then(() => {
       alert("Text wurde in die Zwischenablage kopiert!");
     })
