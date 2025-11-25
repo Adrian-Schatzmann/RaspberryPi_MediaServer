@@ -20,12 +20,12 @@ const chapters = [
   { file: "a1.html", title: "1. 3D Druck" },
   { file: "a2.html", title: "2. Raspberry Pi Setup" },
   { file: "a3.html", title: "3. Dependencies" },
-  { file: "a3.html", title: "4. Netzwerk Setup" },
-  { file: "a4.html", title: "5. Verkabelung" },
-  { file: "a5.html", title: "6. Case" },
-  { file: "a6.html", title: "7. Display & Button" },
-  { file: "a7.html", title: "8. SSD" },
-  { file: "a8.html", title: "9. Plex" },
+  { file: "a4.html", title: "4. Netzwerk Setup" },
+  { file: "a5.html", title: "5. Verkabelung" },
+  { file: "a6.html", title: "6. Case" },
+  { file: "a7.html", title: "7. Display & Button" },
+  { file: "a8.html", title: "8. SSD" },
+  { file: "a9.html", title: "9. Plex" },
 ];
 
 //Inhaltsverzeichnis generieren
