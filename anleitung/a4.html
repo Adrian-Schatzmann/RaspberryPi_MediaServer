@@ -21,7 +21,9 @@
             </td>
             <td><a class="nav-links" href="../index.html">Home</a></td>
             <td><a class="nav-links" href="../planung.html">Planung</a></td>
-            <td><a class="nav-links" href="a1.html">Anleitung</a></td>
+            <td>
+              <a class="nav-links" href="a1.html">Anleitung</a>
+            </td>
             <td><a class="nav-links" href="../impressum.html">Impressum</a></td>
           </tr>
         </table>
@@ -39,37 +41,26 @@
 
       <!--Anleitungstext-->
       <section class="tutorialText">
-        <h2>4. Verkabelung</h2>
+        <h2>4. Netzwerk Setup</h2>
         <p>
-          In diesem Schritt werden alle Komponenten verkabelt. Wie genau man
-          lötet ist online ausreichend dokumentiert. Hier geht es vor allem um
-          die Verkabelung, also was womit verbunden sein muss.
+          Wir können einen Hotspot definieren, mit dem wir uns automatisch
+          verbinden wenn verfügbar. Ansonsten gibt es ein fallback WLAN:
         </p>
         <ul>
-          <li data-highlight-group="0">
-            Ca. 10-15cm lange Kabel zuschneiden (besser zu lange als zu kurz).
-            Die Enden abisolieren und verdrehen
+          <li data-highlight-group="0">Hotspot auf dem iPhone aktivieren</li>
+          <li data-highlight-group="1">
+            Erneut nach verfügbaren WLAN Netzwerken suchen (Es kann einen Moment
+            dauern, bis der Hotspot angezeigt wird. Wenn nötig commands mehrfach
+            eingeben)
           </li>
           <li data-highlight-group="1">
-            Am Einschaltknopf zwei Kabel anlöten. Je nach Modell sind die Pins
-            unterschiedlich beschriftet, hier werden C und NO (normally
-            open) verwendet
+            Hotspot und Fallback Netzwerk hinzufügen. Dabei die SSID und
+            Passwörter anpassen. Bei Erfolg bricht die SSH Verbindung ab, daher
+            neu verbinden
           </li>
-          <li data-highlight-group="2">
-            Den Powerbutton im Gehäuse montieren. Nach dem Löten an das
-            Breakout Board ist das ggf. nicht mehr möglich
-          </li>
-          <li data-highlight-group="3">
-            Jeweils ein Kabel an jeden Pin des Displays löten
-          </li>
-          <li data-highlight-group="4, 5">
-            Die anderen Enden der Display- und Buttonkabel auf das
-            breakout borad löten. Die Pins sind auf der Rückseite beschriftet.
-            Siehe
-            <a href="../media/verkabelung/pinout.png" target="_blank"
-              >diese Referenztabelle</a
-            >
-            für das benötigte Layout
+          <li data-highlight-group="1">
+            Die Prioritäten setzen. Eine höhere Zahl entspricht einer höheren
+            Priorität. Konfiguration am besten durch einen Neustart des Raspberry Pi testen
           </li>
         </ul>
       </section>
@@ -77,36 +68,27 @@
       <!--Bilder/Code Slider-->
       <section class="tutorialImage">
         <div id="slider" class="slider">
-          <img
-            class="slide"
-            src="../media/verkabelung/cable.JPG"
-            display="none"
-          />
-          <img
-            class="slide"
-            src="../media/verkabelung/button_cable.JPG"
-            display="none"
-          />
-          <img
-            class="slide"
-            src="../media/verkabelung/button.JPG"
-            display="none"
-          />
-          <img
-            class="slide"
-            src="../media/verkabelung/display.JPG"
-            display="none"
-          />
-          <img
-            class="slide"
-            src="../media/verkabelung/boBoard.JPG"
-            display="none"
-          />
-          <img
-            class="slide"
-            src="../media/verkabelung/boBoard2.JPG"
-            display="none"
-          />
+          <img class="slide" src="../media/network/hotspot.png" display="none" />
+          <code class="slide" display="none">
+            <pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Wifi suchen</span>
+sudo nmcli device wifi rescan
+nmcli device wifi list
+</pre>
+          </code>
+          <code class="slide" display="none">
+<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Hinzufügen (SSH Verbindung bricht ab, jeweils neu verbinden)</span>
+sudo nmcli device wifi connect <span style="color: rgb(171, 227, 56); font-weight: 400;">"aLabor"</span> password <span style="color: rgb(171, 227, 56); font-weight: 400;">"[PASSWORT]"</span> name <span style="color: rgb(171, 227, 56); font-weight: 400;">"aLabor"</span>
+sudo nmcli device wifi connect <span style="color: rgb(171, 227, 56); font-weight: 400;">"[Hotspot_SSID]"</span> password <span style="color: rgb(171, 227, 56); font-weight: 400;">"[PASSWORT]"</span> name <span style="color: rgb(171, 227, 56); font-weight: 400;">"[Hotspot_SSID]"</span></pre>
+          </code>
+          <code class="slide" display="none">
+<pre><span style="color: rgb(212, 208, 171); font-weight: 400;">#Prioritäten setzen</span>
+sudo nmcli connection modify <span style="color: rgb(171, 227, 56); font-weight: 400;">"aLabor"</span> connection.autoconnect-priority 1
+sudo nmcli connection modify <span style="color: rgb(171, 227, 56); font-weight: 400;">"[HOTSPOT_SSID]"</span> connection.autoconnect-priority 2
+
+<span style="color: rgb(212, 208, 171); font-weight: 400;">#Aktuelle Verbindung prüfen:</span>
+iwgetid -r</pre>
+          </code>
+
         </div>
       </section>
 
@@ -118,10 +100,7 @@
             <button id="nextBtn">Nächster Schritt</button>
           </div>
           <div class="buttonAlignRight">
-            <a href="a3.html"
-              ><button id="prevBtn">Vorheriges Kapitel</button></a
-            >
-            <a href="a5.html"><button id="nextBtn">Nächstes Kapitel</button></a>
+            <a href="a2.html"><button id="nextBtn">Nächstes Kapitel</button></a>
           </div>
         </div>
       </section>
