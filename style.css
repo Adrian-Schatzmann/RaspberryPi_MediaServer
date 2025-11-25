@@ -318,6 +318,11 @@ code {
   text-align: left;
 }
 
+pre { /*Zeilenumbrüche bei Code*/
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
 /* =========================
 
    Responsive Design
